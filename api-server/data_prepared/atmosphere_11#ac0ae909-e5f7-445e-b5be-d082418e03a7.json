@@ -1,0 +1,191 @@
+[
+  {
+    "id": 0,
+    "date": "2015-06-12",
+    "uid": "bd92cbbe-02a4-4059-9af9-d7b963b94774",
+    "lemma": "['clean', 'friendly', 'prime', 'location', 'relaxing', 'vibe']",
+    "sentence": "Clean friendly prime location with a relaxing vibe",
+    "cpt": "0",
+    "category": "atmosphere"
+  },
+  {
+    "id": 1,
+    "date": "2015-06-15",
+    "uid": "a388c4ed-28cc-4687-975a-a9ffa679aa2c",
+    "lemma": "['good', 'salsa', 'event', 'sit', 'ashville', 'friendly', 'atmosphere', 'balcony', 'lobby', 'overlook', 'biltmore', 'avenue']",
+    "sentence": "it is the best salsa event every 2 sat ashvile has friendly atmosphere on the balcony and the lobby overlooking Biltmore Avenue",
+    "cpt": "0",
+    "category": "atmosphere"
+  },
+  {
+    "id": 2,
+    "date": "2015-06-23",
+    "uid": "fb26d4e9-f17e-4c00-abda-b2be63347313",
+    "lemma": "['band', 'saturday', 'evening', 'add', 'atmosphere', 'enjoyment', 'index']",
+    "sentence": "There was a band on Saturday evening which really added to the atmosphere and enjoyment index",
+    "cpt": "0",
+    "category": "atmosphere"
+  },
+  {
+    "id": 3,
+    "date": "2015-07-05",
+    "uid": "bfd4baae-6958-49bb-88b8-facc7185b73e",
+    "lemma": "['experience', 'give', 'park', 'inn']",
+    "sentence": "Experience the Gove Park Inn",
+    "cpt": "0",
+    "category": "atmosphere"
+  },
+  {
+    "id": 4,
+    "date": "2015-09-09",
+    "uid": "1442cd50-805b-4eb1-970b-24e4c3cdac76",
+    "lemma": "['lounge', 'coffee', 'snack', 'bar', 'swanky', 'bar']",
+    "sentence": "The lounge has a coffee and snack bar inside as well as a swanky bar",
+    "cpt": "0",
+    "category": "atmosphere"
+  },
+  {
+    "id": 5,
+    "date": "2015-09-09",
+    "uid": "1442cd50-805b-4eb1-970b-24e4c3cdac76",
+    "lemma": "['note', 'people', 'stay', 'hip', 'young', 'hotel', '70']",
+    "sentence": "Of note most of the people staying at this hip and young hotel are in their 50 70s",
+    "cpt": "0",
+    "category": "atmosphere"
+  },
+  {
+    "id": 6,
+    "date": "2015-09-29",
+    "uid": "ba01f547-cbc9-4fb8-adba-35b95226a627",
+    "lemma": "['stay', 'night', 'hotel', 'walk', 'distance', 'restaurant', 'attraction', 'downtown', 'asheville', 'parking', 'great', 'modern', 'vibe', 'friendly', 'staff']",
+    "sentence": "We stayed one night at this hotel it is within walking distance of the restaurants and attractions of downtown Asheville has parking a great modern vibe and a friendly staff",
+    "cpt": "0",
+    "category": "atmosphere"
+  },
+  {
+    "id": 7,
+    "date": "2015-12-21",
+    "uid": "ce20e620-0bad-4b8d-a87f-f80a440e6d24",
+    "lemma": "['trendy', 'asheville', 'location', 'big', 'plus']",
+    "sentence": "Trendy very Asheville location is a big plus",
+    "cpt": "0",
+    "category": "atmosphere"
+  },
+  {
+    "id": 8,
+    "date": "2016-02-27",
+    "uid": "d48907e3-551a-4fa5-b82b-a3fb0c350b51",
+    "lemma": "['great', 'staff', 'ambiance', 'spot', 'like', 'night', 'life', 'room', 'quiet']",
+    "sentence": "Great staff and ambiance definitely your spot if you like night life although the rooms are very quiet too",
+    "cpt": "0",
+    "category": "atmosphere"
+  },
+  {
+    "id": 9,
+    "date": "2016-04-24",
+    "uid": "23d113a5-b83c-4c87-a046-ba9b719373c9",
+    "lemma": "['locate', 'great', 'vibe']",
+    "sentence": "Well located with a great vibe",
+    "cpt": "0",
+    "category": "atmosphere"
+  },
+  {
+    "id": 10,
+    "date": "2016-07-15",
+    "uid": "9bbe743d-864f-449f-a351-8120e5559bb1",
+    "lemma": "['would', 'stay', 'base', 'experience']",
+    "sentence": "Would stay again based on experience",
+    "cpt": "1",
+    "category": "atmosphere"
+  },
+  {
+    "id": 11,
+    "date": "2016-08-20",
+    "uid": "9ce9710f-a128-47f5-9724-b69bb3e06eb7",
+    "lemma": "['time', 'stay', 'downtown', 'excited', 'atmosphere', 'town']",
+    "sentence": "No matter how many times we stay at Aloft in downtown I always get excited because of the atmosphere in this part of town",
+    "cpt": "2",
+    "category": "atmosphere"
+  },
+  {
+    "id": 12,
+    "date": "2017-01-01",
+    "uid": "19ce7ed9-07e0-4042-85b7-318698631d35",
+    "lemma": "['create', 'disrespectful', 'atmosphere', 'pay', 'customer', 'couple', 'hour', 'watch', 'rude', 'people']",
+    "sentence": "He created a very disrespectful atmosphere for paying customers and within a couple of hours of being down there watching he was rude to at least 3 people",
+    "cpt": "2",
+    "category": "atmosphere"
+  },
+  {
+    "id": 13,
+    "date": "2017-01-16",
+    "uid": "a014cb1c-44e8-48d4-8502-440d8d90b456",
+    "lemma": "['total', 'experience', 'great']",
+    "sentence": "Total experience was great",
+    "cpt": "2",
+    "category": "atmosphere"
+  },
+  {
+    "id": 14,
+    "date": "2017-02-19",
+    "uid": "51d51148-1f34-4d0e-b3ac-12b57910415f",
+    "lemma": "['friend', 'pleasant', 'experience', 'decent', 'venue', 'fun']",
+    "sentence": "I had a friend who did not have as pleasant of an experience there but still a decent venue for fun",
+    "cpt": "2",
+    "category": "atmosphere"
+  },
+  {
+    "id": 15,
+    "date": "2017-02-19",
+    "uid": "7b423098-bf89-4571-8458-f0b7538fffb5",
+    "lemma": "['could', 'ask', 'well', 'experience']",
+    "sentence": "Could not ask for a better experience",
+    "cpt": "2",
+    "category": "atmosphere"
+  },
+  {
+    "id": 16,
+    "date": "2017-11-25",
+    "uid": "207ad280-429c-4607-8692-bfc32c4f0162",
+    "lemma": "['pay', 'upper', 'end', 'hotel', 'expectation', 'high', 'experience']",
+    "sentence": "It \u2019s just that when paying for an upper end hotel the expectation is higher than what we experienced",
+    "cpt": "2",
+    "category": "atmosphere"
+  },
+  {
+    "id": 17,
+    "date": "2017-11-26",
+    "uid": "eb915aba-f17b-4837-b1ca-087717291a56",
+    "lemma": "['could', 'recommend', 'experience', 'price']",
+    "sentence": "Could not recommend the experience especially for the price",
+    "cpt": "2",
+    "category": "atmosphere"
+  },
+  {
+    "id": 18,
+    "date": "2018-01-28",
+    "uid": "1b6bf88a-f4f5-4daf-834c-2f4528dc80a9",
+    "lemma": "['visit', 'experience', 'bad', 'customer', 'service']",
+    "sentence": "However in all of my visits at Aloft I NEVER experienced bad customer service",
+    "cpt": "2",
+    "category": "atmosphere"
+  },
+  {
+    "id": 19,
+    "date": "2018-09-02",
+    "uid": "50e0b1d2-aeb6-4ffd-942a-82c18d1e8bea",
+    "lemma": "['write', 'review', 'time', 'experience', 'justice']",
+    "sentence": "I \u2019m not one to write reviews but I had to this time to do my experience here justice",
+    "cpt": "2",
+    "category": "atmosphere"
+  },
+  {
+    "id": 20,
+    "date": "2019-03-22",
+    "uid": "6ab1b4c1-881b-4a2e-bb7a-47c202ef4a4f",
+    "lemma": "['room', 'average', 'sized', 'creative', 'design', 'aspect']",
+    "sentence": "Our room was average sized but with a creative design aspect to it",
+    "cpt": "2",
+    "category": "atmosphere"
+  }
+]
