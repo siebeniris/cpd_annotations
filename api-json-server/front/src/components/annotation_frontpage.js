@@ -43,28 +43,30 @@ function AnnotationFront() {
     }
 
     const handleAnnotator = e => {
-        if(e.length>3){
-        setUsername(e.target.value)}
-        else{
-            e.preventDefault()
-            alert("The input username is too short, please try again!")
-        }
+        setUsername(e.target.value)
     }
 
-    const clickRegister =async () =>{
+    const clickRegister =async (e) =>{
+
         let now = new Date();
         if(registered.includes(username)){
+            e.preventDefault();
             alert("username exists, try again")
             return
         }
 
+        if(username.length>3){
         await axios.post(
                 BACKEND_PORT+BACKEND_USERS,
                 {
                     id: shortid.generate(),
                     date: now,
                     username: username,
-                }).then(alert(`username ${username} registered successfully. Please remember it.`))
+                }).then(alert(`username ${username} registered successfully. Please remember it.`))}
+        else{
+            e.preventDefault()
+            alert("The input username is too short, please try again!")
+        }
     }
 
 
@@ -89,7 +91,7 @@ function AnnotationFront() {
 
             <Row className="justify-content-md-center">
                 <br/>
-                <form onSubmit={clickRegister}>
+                <form onSubmit={(e) => {clickRegister(e)}}>
                     <label>
                         <input type="text" value={username} onChange={handleAnnotator}
                         placeholder="Enter Username"/>
