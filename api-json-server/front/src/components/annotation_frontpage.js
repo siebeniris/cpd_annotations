@@ -1,11 +1,13 @@
 import React, {useState, useEffect} from "react";
-import {Row, Container} from "react-bootstrap";
+import {Row, Container, Table} from "react-bootstrap";
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 const shortid = require('shortid')
 
 const BACKEND_PATH = `http://localhost:9000/reviews/`
 const BACKEND_USERS = `http://localhost:9000/users/`
+const BACKEND_ANNO = `http://localhost:9000/annotations`
+
 //https://tylermcginnis.com/react-router-pass-props-to-link/
 
 function AnnotationFront() {
@@ -43,7 +45,12 @@ function AnnotationFront() {
     }
 
     const handleAnnotator = e => {
-        setUsername(e.target.value)
+        if(e.length>3){
+        setUsername(e.target.value)}
+        else{
+            e.preventDefault()
+            alert("The input username is too short, please try again!")
+        }
     }
 
     const clickRegister =async () =>{
@@ -61,7 +68,6 @@ function AnnotationFront() {
                     username: username,
                 }).then(alert(`username ${username} registered successfully. Please remember it.`))
     }
-
 
 
     return (
@@ -83,34 +89,52 @@ function AnnotationFront() {
                 </ul>
             </nav>
 
-            <Row>
+            <Row className="justify-content-md-center">
+                <br/>
                 <form onSubmit={clickRegister}>
                     <label>
-                        <input type="text" value={username} onChange={handleAnnotator}/>
+                        <input type="text" value={username} onChange={handleAnnotator}
+                        placeholder="Enter Username"/>
+
+
                     </label>
                     <input type="submit" value="Register"/>
+                    <small id="usernameHelp" className="form-text text-muted">
+                        Please enter an all-alphabet username longer than 3 characters.
+                    </small>
                 </form>
 
+
             </Row>
+            <br/>
+            <br/>
 
 
             <div className="content">
                 <h1> Links for Annotations </h1>
-                {(reviews && reviews.length > 0) ? (
-                    reviews.map((review, index) => {
+                <Table striped bordered hover>
+                    <thead>
+                    <tr>
+                        <th>File</th>
+                        <th>Link</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {(reviews && reviews.length > 0) ? (
+                        reviews.map((review, index) => {
                             const name = review["name"]
                             let linkl = "reviews/" + String(index)
 
                             return (
-                                <p> {name}
-                                    <Link to={linkl}> Link</Link></p>
-                            )
-                        }
-                    )
+                                <tr>
+                                <td>{name}</td>
 
-                ) : (<p>Loading Reviews ...</p>)}
+                                <td><Link to={linkl}> {linkl}</Link></td>
+                                </tr>)})
+                    ) : (<p>Loading Reviews ...</p>)}
+                    </tbody>
+                </Table>
             </div>
-
         </Container>
 
 
