@@ -1,3 +1,4 @@
+import  {BACKEND_PORT, BACKEND_REVIEWS, BACKEND_USERS, BACKEND_ANNOTATIONS} from './config'
 import React, {useState, useEffect} from "react";
 import Table from 'react-bootstrap/Table';
 import {Container, Row, Col, Button, ToggleButton, ButtonGroup} from 'react-bootstrap';
@@ -5,9 +6,6 @@ import axios from 'axios';
 import shortid from "shortid";
 
 
-const BACKEND_PATH = `http://localhost:9000/reviews/`
-const BACKEND_ANNO = `http://localhost:9000/annotations`
-const BACKEND_USERS = `http://localhost:9000/users`
 const CPT_ANSWERS = ["More Positive", "More Negative", "No Difference"]
 const ANSWER_COLOR = ["success", "danger", "warning"]
 
@@ -41,7 +39,7 @@ function Annotator(props) {
 
     // get user list.
     const getUserList = async () => {
-        let res = await axios.get(BACKEND_USERS)
+        let res = await axios.get(BACKEND_PORT+ BACKEND_USERS)
         var user_list = []
         res.data.map((user, index) => {
             user_list.push(user.username)
@@ -52,7 +50,7 @@ function Annotator(props) {
     // get the annotator list.
     const getPastAnnotators = async () => {
         console.log('filename', filename)
-        const query = BACKEND_ANNO + '?filename=' + filename;
+        const query = BACKEND_PORT+BACKEND_ANNOTATIONS + '?filename=' + filename;
         let res = await axios.get(query)
         var annotatorsBy = []
         res.data.map((annotation, index) => {
@@ -65,7 +63,7 @@ function Annotator(props) {
     const getReviews = async () => {
         let reviewId = params.reviewId
         console.log(`reviewId ${reviewId}`)
-        let res = await axios.get(BACKEND_PATH + reviewId)
+        let res = await axios.get(BACKEND_PORT+BACKEND_REVIEWS + reviewId)
         let review_list = res.data['review_list']
         setReviews(review_list);
         setName(res.data['name'])
@@ -90,7 +88,7 @@ function Annotator(props) {
 
     // reset the review list.
     const clickReset = async () => {
-        let res = await axios.get(BACKEND_PATH + params.reviewId)
+        let res = await axios.get(BACKEND_PORT+BACKEND_REVIEWS + params.reviewId)
         let review_list = res.data['review_list']
         setReviews(review_list);
         setName(res.data['name'])
@@ -128,7 +126,7 @@ function Annotator(props) {
         }
 
         if (areAllNotNull && assertLen) {
-            await axios.post(BACKEND_ANNO,
+            await axios.post(BACKEND_PORT+BACKEND_ANNOTATIONS,
                 {
                     id: shortid.generate(),
                     date: now,

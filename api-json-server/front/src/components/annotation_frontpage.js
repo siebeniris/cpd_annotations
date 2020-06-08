@@ -1,12 +1,10 @@
+import  {BACKEND_PORT ,BACKEND_REVIEWS, BACKEND_USERS} from './config'
 import React, {useState, useEffect} from "react";
 import {Row, Container, Table} from "react-bootstrap";
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 const shortid = require('shortid')
 
-const BACKEND_PATH = `http://localhost:9000/reviews/`
-const BACKEND_USERS = `http://localhost:9000/users/`
-const BACKEND_ANNO = `http://localhost:9000/annotations`
 
 //https://tylermcginnis.com/react-router-pass-props-to-link/
 
@@ -28,13 +26,13 @@ function AnnotationFront() {
     })
 
     const getReviews = async () => {
-        let res = await axios.get(BACKEND_PATH)
+        let res = await axios.get(BACKEND_PORT+BACKEND_REVIEWS)
         setReviews(res.data);
 
     }
 
     const getRegisterations = async() =>{
-        let res= await axios.get(BACKEND_USERS);
+        let res= await axios.get(BACKEND_PORT+BACKEND_USERS);
         let users_data = res.data;
         let users = [];
         users_data.map((user, index)=>{
@@ -61,7 +59,7 @@ function AnnotationFront() {
         }
 
         await axios.post(
-                BACKEND_USERS,
+                BACKEND_PORT+BACKEND_USERS,
                 {
                     id: shortid.generate(),
                     date: now,
