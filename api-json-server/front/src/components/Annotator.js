@@ -20,6 +20,11 @@ function Annotator(props) {
     const [annotatedBy, setAnnotated] = useState(null);
     const [cpts, setCpts] = useState(null);
     const [cptAnswer, setCptAnswer] = useState({});
+
+    const [align, setAlign] = useState({});
+    const [align_aspect, setAlignAspect] = useState({});
+    const [align_sentiment, setAlignSentiment] = useState({});
+
     // localhost:9000/users
     const [users, setUsers] = useState(null);
 
@@ -65,16 +70,27 @@ function Annotator(props) {
         console.log(`reviewId ${reviewId}`)
         let res = await axios.get(BACKEND_PORT+BACKEND_REVIEWS + reviewId)
         let review_list = res.data['review_list']
+        console.log(review_list)
         setReviews(review_list);
+
         setName(res.data['name'])
         setCategory(res.data['review_list'][0]['category'])
 
         // get distinct list of change points. [0,1,2]
         const cpts_ = []
+        const align_dict= {}
+        const align_aspect_dict = {}
+        const align_sentiment_dict = {}
         review_list.map((review, index) => {
+            align_dict[index] = false
+            align_aspect_dict[index] = false
+            align_sentiment_dict[index] = false
             cpts_.push(parseInt(review["cpt"]))
         })
         setCpts(cpts_.filter(distinct))
+        setAlign(align_dict)
+        setAlignSentiment(align_sentiment_dict)
+        setAlignAspect(align_aspect_dict)
 
         // for pagination.
         if (parseInt(reviewId) === 0) {
@@ -88,11 +104,12 @@ function Annotator(props) {
 
     // reset the review list.
     const clickReset = async () => {
-        let res = await axios.get(BACKEND_PORT+BACKEND_REVIEWS + params.reviewId)
-        let review_list = res.data['review_list']
-        setReviews(review_list);
-        setName(res.data['name'])
-        console.log(review_list);
+        // let res = await axios.get(BACKEND_PORT+BACKEND_REVIEWS + params.reviewId)
+        // let review_list = res.data['review_list']
+        // setReviews(review_list);
+        // setName(res.data['name'])
+
+        console.log("review_list");
     }
 
     // click submit
@@ -100,24 +117,25 @@ function Annotator(props) {
         console.log({review_list: reviews})
         let now = new Date();
         var annotations = []
-        var aligns = []
+        var annots =[]
+
         reviews.map((review, index) => {
             annotations.push({
                 "id": review.id,
-                "align": review.align,
-                "align_aspect": review.align_aspect,
-                "align_sentiment": review.align_sentiment
+                "align": align[index],
+                "align_aspect": align_aspect[index],
+                "align_sentiment": align_sentiment[index]
             })
-            aligns.push(review.align);
+            annots.push(align[index]||align_aspect[index]||align_sentiment[index])
         })
-        console.log(`align ==>`, aligns)
-
+        console.log(`annotations:`, annotations)
         // all the aligns are cheked.
-        var areAllNotNull = aligns.every(function (i) {
-            return i !== undefined;
+        var areAllNotFalse = annots.every(function (i) {
+            return i !== false;
         })
-
+        console.log(`annots:`, annots)
         console.log("users:", users)
+
         let assertLen = Object.keys(cptAnswer).length === cpts.length - 1
 
         if (!users.includes(annotator)) {
@@ -125,7 +143,7 @@ function Annotator(props) {
             alert("Please register first.")
         }
 
-        if (areAllNotNull && assertLen) {
+        if (areAllNotFalse && assertLen) {
             await axios.post(BACKEND_PORT+BACKEND_ANNOTATIONS,
                 {
                     id: shortid.generate(),
@@ -175,26 +193,28 @@ function Annotator(props) {
         }
     }
 
-    const handleAspect = index => e => {
-        let newArr = [...reviews];
-        newArr[index]["align_aspect"] = e.target.value
-        setReviews(newArr)
-        console.log(reviews, filename)
+    const handleAspect = index => {
+        setAlignAspect(state => (state[index]= !state[index], state))
+
+        // setAlignAspect(state => (state[index]=e.target.value, state))
+        console.log('align aspect', align_aspect)
     }
 
-    const handleSentiment = index => e => {
-        let newArr = [...reviews];
-        newArr[index]["align_sentiment"] = e.target.value
-        setReviews(newArr)
-        console.log(reviews, filename)
+    const handleSentiment = index =>  {
+        setAlignSentiment(state => (state[index]= !state[index], state))
+        // setAlignSentiment(state => (state[index]=e.target.value, state))
+
+        console.log(`align sentiment` , align_sentiment)
     }
+
 
     // handle the change to click on whether it is typical of the category
-    const handleChangeAlign = index => e => {
-        let newArr = [...reviews];
-        newArr[index]["align"] = e.target.value
-        setReviews(newArr)
-        console.log(reviews, filename)
+    const handleChangeAlign = index => {
+        setAlign(state => (state[index]= !state[index], state))
+        // setAlign(state => (state[index]=e.target.value, state))
+
+        console.log(`align` , align)
+
     }
 
 
@@ -207,34 +227,34 @@ function Annotator(props) {
 
                 <td>{review.date}</td>
                 <td>
-                    {(review.offset[0] !== 0) ? `...` : ``} {review.sentence.substring(review.offset[0] - 150, review.offset[0])}
+                    {(review.offset_sent[0] !== 0) ? `...` : ``} {review.review.substring(review.offset_sent[0] - 150, review.offset_sent[0])}
                     <span style={{
                         fontWeight: "bold"
-                    }}> {review.sentence.substring(review.offset[0], review.offset[1])}</span>
-                    {review.sentence.substring(review.offset[1], review.offset[1] + 150)} {`...`}
+                    }}> {review.review.substring(review.offset_sent[0], review.offset_sent[1])}</span>
+                    {review.review.substring(review.offset_sent[1], review.offset_sent[1] + 150)} {`...`}
                 </td>
                 <td>
-                    <div className="checkbox-list float-left">
-                        <label className="checkbox text-left">
-                            <input type="checkbox" className="checkbox-control" checked={review.align}
-                                   name="yes" value="yes" onChange={handleChangeAlign(index)}/>
+                    <div className="form-check float-left">
+                        <label className="form-check-label text-left">
+                            <input type="checkbox" className="form-check-label" checked={align[index]}
+                                   name="yes" value="yes" onChange={(index) => handleChangeAlign(index)}/>
                             <span className="checkbox-label"> yes (aspect & sentiment) </span>
                             <br/>
 
-                            {(review.align) ? <span role={'img'}>&#10004;</span> : ``}
+                            {(align[index]) ? <span role={'img'}>&#10004;</span> : ``}
                             <br/>
                             <br/>
 
-                            <input type="checkbox" className="checkbox-control" checked={review.align_aspect}
-                                   name="aspect_no" value="no" onChange={handleAspect(index)}/>
+                            <input type="checkbox" className="form-check-label" checked={align_aspect[index]}
+                                   name="aspect_no" value="no" onChange={(index) => handleAspect(index)}/>
                             <span className="checkbox-label"> no (aspect) </span>
                             <br/>
 
-                            <input type="checkbox" className="checkbox-control" checked={review.align_sentiment}
-                                   name="sentiment_no" value="no" onChange={handleSentiment(index)}/>
+                            <input type="checkbox" className="form-check-label" checked={align_sentiment[index]}
+                                   name="sentiment_no" value="no" onChange={(index) => handleSentiment(index)}/>
                             <span className="checkbox-label"> no (sentiment) </span>
                             <br/>
-                            {(review.align_aspect || review.align_sentiment) ? <span role={'img'}>&#10004;</span> : ``}
+                            {(align_aspect[index] || align_sentiment[index]) ? <span role={'img'}>&#10004;</span> : ``}
                         </label>
                     </div>
                 </td>
@@ -306,7 +326,7 @@ function Annotator(props) {
 
             {(category && category.length > 0) ?
                 (<h3 style={{"text-align": "left"}}>Category:<span
-                    style={{"color": "blue", "fontWeight": "bold"}}> {category.toUpperCase()}</span></h3>)
+                    style={{"color": "blue", "fontWeight": "bold"}}> {category.join(", ").toUpperCase()}</span></h3>)
                 : (' ')}
 
             {(filename && filename.length > 0) ?

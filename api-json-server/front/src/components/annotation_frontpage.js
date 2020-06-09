@@ -122,7 +122,8 @@ function AnnotationFront() {
                     <tbody>
                     {(reviews && reviews.length > 0) ? (
                         reviews.map((review, index) => {
-                            const name = review["name"]
+                            if(review==null){console.log("null index", index)}
+                            const name = (review.hasOwnProperty("name"))?(review["name"]):(" ")
                             let linkl = "reviews/" + String(index)
 
                             return (
