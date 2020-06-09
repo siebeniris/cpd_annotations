@@ -25,6 +25,7 @@ function Annotator(props) {
     const [align_aspect, setAlignAspect] = useState({});
     const [align_sentiment, setAlignSentiment] = useState({});
 
+
     // localhost:9000/users
     const [users, setUsers] = useState(null);
 
@@ -54,7 +55,6 @@ function Annotator(props) {
 
     // get the annotator list.
     const getPastAnnotators = async () => {
-        console.log('filename', filename)
         const query = BACKEND_PORT+BACKEND_ANNOTATIONS + '?filename=' + filename;
         let res = await axios.get(query)
         var annotatorsBy = []
@@ -78,19 +78,13 @@ function Annotator(props) {
 
         // get distinct list of change points. [0,1,2]
         const cpts_ = []
-        const align_dict= []
-        const align_aspect_dict = []
-        const align_sentiment_dict = []
+
         review_list.map((review, index) => {
-            align_dict[index] = false
-            align_aspect_dict[index] = false
-            align_sentiment_dict[index] = false
+
             cpts_.push(parseInt(review["cpt"]))
         })
         setCpts(cpts_.filter(distinct))
-        setAlign(align_dict)
-        setAlignSentiment(align_sentiment_dict)
-        setAlignAspect(align_aspect_dict)
+
 
         // for pagination.
         if (parseInt(reviewId) === 0) {
@@ -122,11 +116,11 @@ function Annotator(props) {
         reviews.map((review, index) => {
             annotations.push({
                 "id": review.id,
-                "align": align[index],
-                "align_aspect": align_aspect[index],
-                "align_sentiment": align_sentiment[index]
+                "align": align[`align`+String(index)],
+                "align_aspect": align_aspect[`aspectNo`+String(index)],
+                "align_sentiment": align_sentiment[`sentimentNo`+String(index)]
             })
-            annots.push(align[index]||align_aspect[index]||align_sentiment[index])
+            annots.push(align[`align`+String(index)]||align_aspect[`aspectNo`+String(index)]||align_sentiment[`sentimentNo`+String(index)])
         })
         console.log(`annotations:`, annotations)
         // all the aligns are cheked.
@@ -193,36 +187,6 @@ function Annotator(props) {
         }
     }
 
-    const handleAspect = index=>e => {
-        // setAlignAspect(state => (state[index]= !state[index], state))
-        setAlignAspect(state => {
-            const arr = state[index]=e.currentTarget.value ;
-            return {
-                arr,
-            }
-        })
-
-        // setAlignAspect(state => (state[index]=e.target.value, state))
-        console.log('align aspect', align_aspect)
-    }
-
-    const handleSentiment = index => e =>  {
-        setAlignSentiment(state => (state[index]=e.currentTarget.value , state))
-        // setAlignSentiment(state => (state[index]=e.target.value, state))
-
-        console.log(`align sentiment` , align_sentiment)
-    }
-
-
-    // handle the change to click on whether it is typical of the category
-    const handleChangeAlign = index => e => {
-        setAlign(state => (state[index]= e.currentTarget.value , state))
-        // setAlign(state => (state[index]=e.target.value, state))
-
-        console.log(`align` , align)
-
-    }
-
 
     const renderReview = (review, index) => {
         return (
@@ -255,21 +219,42 @@ function Annotator(props) {
                 <td>
                     <div className="form-check float-left">
                         <label className="form-check-label text-left">
-                            <input type="checkbox" className="form-check-label" checked={align[index]}
-                                   name="yes" value="yes" onChange={(index) => handleChangeAlign(index)}/>
+                            <input type="checkbox" className="form-check-label"
+                                   name={`align${index}`} value={align[index]}
+                                   checked ={align[index]}
+                                   onChange={(event) => {
+                                       let key=event.target.name;
+                                       align[key] = event.target.checked
+                                       setAlign(align)
+                                       console.log(align)
+                                   }}
+                            />
                             <span className="checkbox-label"> yes (aspect & sentiment) </span>
                         <br/>
                             {(align[index]) ? <span role={'img'}>&#10004;</span> : ``}
                             <br/>
                             <br/>
 
-                            <input type="checkbox" className="form-check-label" checked={align_aspect[index]}
-                                   name="aspect_no" value="no" onChange={(index) => handleAspect(index)}/>
+                            <input type="checkbox" className="form-check-label"
+                                   name={`aspectNo${index}`} value={align_aspect[index]}  checked ={align_aspect[index]}
+                                   onChange={(event) => {
+                                       let key=event.target.name;
+                                       align_aspect[key] = event.target.checked
+                                       setAlignAspect(align)
+                                       console.log(align_aspect)
+                                   }}/>
                             <span className="checkbox-label"> no (aspect) </span>
                             <br/>
 
                             <input type="checkbox" className="form-check-label" checked={align_sentiment[index]}
-                                   name="sentiment_no" value="no" onChange={(index) => handleSentiment(index)}/>
+                                   name={`sentimentNo${index}`} value={align_sentiment[index]}
+                                   onChange={(event) => {
+                                       let key=event.target.name;
+                                       align_sentiment[key] = event.target.checked
+                                       setAlignSentiment(align)
+                                       console.log(align_sentiment)
+                                   }}
+                                   />
                             <span className="checkbox-label"> no (sentiment) </span>
                             <br/>
                             {(align_aspect[index] || align_sentiment[index]) ? <span role={'img'}>&#10004;</span> : ``}
@@ -390,7 +375,7 @@ function Annotator(props) {
             </Row>
 
             <Row>
-                <p>{(cpts && cpts.length > 0) ? (crosszip(cpts)) : ` `}</p>
+                {(cpts && cpts.length > 0) ? (crosszip(cpts)) : ` `}
 
             </Row>
 
