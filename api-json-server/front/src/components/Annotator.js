@@ -78,9 +78,9 @@ function Annotator(props) {
 
         // get distinct list of change points. [0,1,2]
         const cpts_ = []
-        const align_dict= {}
-        const align_aspect_dict = {}
-        const align_sentiment_dict = {}
+        const align_dict= []
+        const align_aspect_dict = []
+        const align_sentiment_dict = []
         review_list.map((review, index) => {
             align_dict[index] = false
             align_aspect_dict[index] = false
@@ -193,15 +193,21 @@ function Annotator(props) {
         }
     }
 
-    const handleAspect = index => {
-        setAlignAspect(state => (state[index]= !state[index], state))
+    const handleAspect = index=>e => {
+        // setAlignAspect(state => (state[index]= !state[index], state))
+        setAlignAspect(state => {
+            const arr = state[index]=e.currentTarget.value ;
+            return {
+                arr,
+            }
+        })
 
         // setAlignAspect(state => (state[index]=e.target.value, state))
         console.log('align aspect', align_aspect)
     }
 
-    const handleSentiment = index =>  {
-        setAlignSentiment(state => (state[index]= !state[index], state))
+    const handleSentiment = index => e =>  {
+        setAlignSentiment(state => (state[index]=e.currentTarget.value , state))
         // setAlignSentiment(state => (state[index]=e.target.value, state))
 
         console.log(`align sentiment` , align_sentiment)
@@ -209,8 +215,8 @@ function Annotator(props) {
 
 
     // handle the change to click on whether it is typical of the category
-    const handleChangeAlign = index => {
-        setAlign(state => (state[index]= !state[index], state))
+    const handleChangeAlign = index => e => {
+        setAlign(state => (state[index]= e.currentTarget.value , state))
         // setAlign(state => (state[index]=e.target.value, state))
 
         console.log(`align` , align)
@@ -232,6 +238,19 @@ function Annotator(props) {
                         fontWeight: "bold"
                     }}> {review.review.substring(review.offset_sent[0], review.offset_sent[1])}</span>
                     {review.review.substring(review.offset_sent[1], review.offset_sent[1] + 150)} {`...`}
+
+                    <br/>
+                    <br/>
+                    <span  style={{fontWeight:"bold", fontColor:"purple"}} >
+                        {(review.offset_topics && review.offset_topics.length>0)? (
+
+                        review.offset_topics.map( (offset, index)=>
+                            {
+                                return "#" +review.review.substring(review.offset_sent[0]+offset[0], review.offset_sent[0]+offset[1])
+                            }
+                        )
+                    ):(" ")}
+                    </span>
                 </td>
                 <td>
                     <div className="form-check float-left">
@@ -239,8 +258,7 @@ function Annotator(props) {
                             <input type="checkbox" className="form-check-label" checked={align[index]}
                                    name="yes" value="yes" onChange={(index) => handleChangeAlign(index)}/>
                             <span className="checkbox-label"> yes (aspect & sentiment) </span>
-                            <br/>
-
+                        <br/>
                             {(align[index]) ? <span role={'img'}>&#10004;</span> : ``}
                             <br/>
                             <br/>
