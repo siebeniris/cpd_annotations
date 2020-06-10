@@ -12,7 +12,7 @@ const ANSWER_COLOR = ["success", "danger", "warning"]
 function Annotator(props) {
     const [reviews, setReviews] = useState(null);
     const [filename, setName] = useState(null);
-    const [annotator, setAnnotator] = useState(null);
+    const [annotator, setAnnotator] = useState('');
     const [category, setCategory] = useState(null);
     const {match: {params}} = props;
     const [prevPage, setPrev] = useState(null);
@@ -70,9 +70,8 @@ function Annotator(props) {
         console.log(`reviewId ${reviewId}`)
         let res = await axios.get(BACKEND_PORT+BACKEND_REVIEWS + reviewId)
         let review_list = res.data['review_list']
-        console.log(review_list)
-        setReviews(review_list);
 
+        setReviews(review_list);
         setName(res.data['name'])
         setCategory(res.data['review_list'][0]['category'])
 
@@ -80,7 +79,6 @@ function Annotator(props) {
         const cpts_ = []
 
         review_list.map((review, index) => {
-
             cpts_.push(parseInt(review["cpt"]))
         })
         setCpts(cpts_.filter(distinct))
@@ -98,12 +96,13 @@ function Annotator(props) {
 
     // reset the review list.
     const clickReset = async () => {
-        // let res = await axios.get(BACKEND_PORT+BACKEND_REVIEWS + params.reviewId)
-        // let review_list = res.data['review_list']
-        // setReviews(review_list);
-        // setName(res.data['name'])
+        setAlignSentiment({})
+        setAlignAspect({})
+        setAlign({})
+        setCptAnswer({})
+        window.location.reload(false)
 
-        console.log("review_list");
+        console.log(align_sentiment,align_aspect, align, cptAnswer);
     }
 
     // click submit
@@ -167,23 +166,23 @@ function Annotator(props) {
     const colorCpt = cpt => {
         switch (cpt) {
             case "0":
-                return {"background-color": "#ebab34", "fontWeight": "bold"}
+                return {backgroundColor: "#ebab34", "fontWeight": "bold"}
             case "1":
-                return {"background-color": "#eb4034", "fontWeight": "bold"}
+                return {backgroundColor: "#eb4034", "fontWeight": "bold"}
             case "2":
-                return {"background-color": "#34ebb4", "fontWeight": "bold"}
+                return {backgroundColor: "#34ebb4", "fontWeight": "bold"}
             case "3":
-                return {"background-color": "#3499eb", "fontWeight": "bold"}
+                return {backgroundColor: "#3499eb", "fontWeight": "bold"}
             case "4":
-                return {"background-color": "#ebab34", "fontWeight": "bold"}
+                return {backgroundColor: "#ebab34", "fontWeight": "bold"}
             case "5":
-                return {"background-color": "#eb4034", "fontWeight": "bold"}
+                return {backgroundColor: "#eb4034", "fontWeight": "bold"}
             case "6":
-                return {"background-color": "#34ebb4", "fontWeight": "bold"}
+                return {backgroundColor: "#34ebb4", "fontWeight": "bold"}
             case "7":
-                return {"background-color": "#3499eb", "fontWeight": "bold"}
+                return {backgroundColor: "#3499eb", "fontWeight": "bold"}
             default:
-                return {"background-color": "#3499eb", "fontWeight": "bold"}
+                return {backgroundColor: "#3499eb", "fontWeight": "bold"}
         }
     }
 
@@ -191,7 +190,7 @@ function Annotator(props) {
     const renderReview = (review, index) => {
         return (
 
-            <tr style={{fontSize: "20px"}}>
+            <tr　key={`table${index}`} style={{fontSize: "20px"}}>
                 <td style={colorCpt(review.cpt)}> {review.cpt}</td>
 
 
@@ -224,7 +223,7 @@ function Annotator(props) {
                                    checked ={align[index]}
                                    onChange={(event) => {
                                        let key=event.target.name;
-                                       align[key] = event.target.checked
+                                       align[key] = event.target.checked;
                                        setAlign(align)
                                        console.log(align)
                                    }}
@@ -239,7 +238,7 @@ function Annotator(props) {
                                    name={`aspectNo${index}`} value={align_aspect[index]}  checked ={align_aspect[index]}
                                    onChange={(event) => {
                                        let key=event.target.name;
-                                       align_aspect[key] = event.target.checked
+                                       align_aspect[key] = event.target.checked;
                                        setAlignAspect(align)
                                        console.log(align_aspect)
                                    }}/>
@@ -250,7 +249,7 @@ function Annotator(props) {
                                    name={`sentimentNo${index}`} value={align_sentiment[index]}
                                    onChange={(event) => {
                                        let key=event.target.name;
-                                       align_sentiment[key] = event.target.checked
+                                       align_sentiment[key] = event.target.checked;
                                        setAlignSentiment(align)
                                        console.log(align_sentiment)
                                    }}
@@ -266,7 +265,7 @@ function Annotator(props) {
     };
 
     const distinct = (value, index, self) => {
-        return self.indexOf(value) == index;
+        return self.indexOf(value) === index;
     }
 
 
@@ -282,7 +281,7 @@ function Annotator(props) {
             return (
                 <div key={index}>
                     <span style={{
-                        "text-align": "center",
+                        textAlign: "center",
                         "fontWeight": "bold"
                     }}> {index}. What is the change from {a.join(" to ")} ? </span>
                     <ButtonGroup toggle>
@@ -328,16 +327,16 @@ function Annotator(props) {
             </nav>
 
             {(category && category.length > 0) ?
-                (<h3 style={{"text-align": "left"}}>Category:<span
+                (<h3 style={{textAlign: "left"}}>Category:<span
                     style={{"color": "blue", "fontWeight": "bold"}}> {category.join(", ").toUpperCase()}</span></h3>)
                 : (' ')}
 
             {(filename && filename.length > 0) ?
-                (<p style={{"text-align": "left"}}>filename:<span
+                (<p style={{textAlign: "left"}}>filename:<span
                     style={{"color": "green", "fontWeight": "bold"}}> {filename}</span></p>)
                 : (' ')}
 
-            <p style={{"text-align": "left"}}>Annotated by:
+            <p style={{textAlign: "left"}}>Annotated by:
                 {(annotatedBy && annotatedBy.length > 0) ?
                     (<span style={{"color": "green", "fontWeight": "bold"}}>
                         {annotatedBy.filter(distinct).join()}
@@ -351,9 +350,9 @@ function Annotator(props) {
 
             <Row>
                 <Table striped bordered hover
-                       style={{"border-collapse": "separate", "border-spacing": "5px", "width": "100%"}}>
+                       style={{borderCollapse: "separate", borderSpacing: "5px", "width": "100%"}}>
                     <thead>
-                    <tr style={{"background-color": "#dadee3"}}>
+                    <tr style={{ backgroundColor: "#dadee3"}}>
                         <th style={{'fontSize': "18px"}}>Stationary Period</th>
                         <th style={{"width": "8%", 'fontSize': '18px'}}>Date</th>
                         <th>Sentence</th>
@@ -367,7 +366,7 @@ function Annotator(props) {
                     {(reviews && reviews.length > 0) ? (
                         reviews.map((review, index) => renderReview(review, index))
                     ) : (
-                        <p>No Reviews found, You may have finished annotation. Thank you!</p>
+                        null
                     )}
                     </tbody>
 

@@ -63,7 +63,11 @@ function AnnotationFront() {
                     id: shortid.generate(),
                     date: now,
                     username: username,
-                }).then(alert(`username ${username} registered successfully. Please remember it.`))}
+                }).then(
+
+                        alert(`username ${username} registered successfully. Please remember it.`)
+
+                   )}
         else{
             e.preventDefault()
             alert("The input username is too short, please try again!")
