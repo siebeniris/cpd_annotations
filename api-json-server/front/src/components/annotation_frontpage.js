@@ -10,7 +10,7 @@ const shortid = require('shortid')
 
 function AnnotationFront() {
     const [reviews, setReviews] = useState(null);
-    const [username, setUsername] = useState(null);
+    const [username, setUsername] = useState('');
     const [registered, setRegistered] = useState(null);
 
     useEffect(() => {
@@ -44,6 +44,7 @@ function AnnotationFront() {
 
     const handleAnnotator = e => {
         setUsername(e.target.value)
+        console.log(username)
     }
 
     const clickRegister =async (e) =>{
@@ -127,12 +128,12 @@ function AnnotationFront() {
                             let linkl = "reviews/" + String(index)
 
                             return (
-                                <tr>
+                                <tr key={index}>
                                 <td>{name}</td>
 
                                 <td><Link to={linkl}> {linkl}</Link></td>
                                 </tr>)})
-                    ) : (<p>Loading Reviews ...</p>)}
+                    ) : null}
                     </tbody>
                 </Table>
             </div>
