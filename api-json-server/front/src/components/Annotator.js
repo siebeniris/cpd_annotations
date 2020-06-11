@@ -1,4 +1,4 @@
-import  {BACKEND_PORT, BACKEND_REVIEWS, BACKEND_USERS, BACKEND_ANNOTATIONS} from './config'
+import  {BACKEND_PORT, BACKEND_REVIEWS, BACKEND_ANNOTATIONS} from './config'
 import React, {useState, useEffect} from "react";
 import Table from 'react-bootstrap/Table';
 import {Container, Row, Col, Button, ToggleButton, ButtonGroup} from 'react-bootstrap';
@@ -26,10 +26,6 @@ function Annotator(props) {
     const [align_sentiment, setAlignSentiment] = useState({});
 
 
-    // localhost:9000/users
-    const [users, setUsers] = useState(null);
-
-
     // load data.
     useEffect(() => {
         if (!reviews) {
@@ -38,20 +34,8 @@ function Annotator(props) {
         if (annotatedBy === null && filename) {
             getPastAnnotators();
         }
-        if (!users) {
-            getUserList();
-        }
-    })
 
-    // get user list.
-    const getUserList = async () => {
-        let res = await axios.get(BACKEND_PORT+ BACKEND_USERS)
-        var user_list = []
-        res.data.map((user, index) => {
-            user_list.push(user.username)
-        })
-        setUsers(user_list);
-    }
+    })
 
     // get the annotator list.
     const getPastAnnotators = async () => {
@@ -78,11 +62,10 @@ function Annotator(props) {
         // get distinct list of change points. [0,1,2]
         const cpts_ = []
 
-        review_list.map((review, index) => {
+        review_list.map((review) => {
             cpts_.push(parseInt(review["cpt"]))
         })
         setCpts(cpts_.filter(distinct))
-
 
         // for pagination.
         if (parseInt(reviewId) === 0) {
@@ -119,24 +102,21 @@ function Annotator(props) {
                 "align_aspect": align_aspect[`aspectNo`+String(index)],
                 "align_sentiment": align_sentiment[`sentimentNo`+String(index)]
             })
-            annots.push(align[`align`+String(index)]||align_aspect[`aspectNo`+String(index)]||align_sentiment[`sentimentNo`+String(index)])
+            annots.push(align[`align`+String(index)]||align_aspect[`aspectNo`+String(index)]
+                ||align_sentiment[`sentimentNo`+String(index)])
         })
         console.log(`annotations:`, annotations)
+        console.log(`annots`, annots)
         // all the aligns are cheked.
         var areAllNotFalse = annots.every(function (i) {
-            return i !== false;
+            return i !== undefined;
         })
         console.log(`annots:`, annots)
-        console.log("users:", users)
 
         let assertLen = Object.keys(cptAnswer).length === cpts.length - 1
 
-        if (!users.includes(annotator)) {
-            e.preventDefault();
-            alert("Please register first.")
-        }
-
         if (areAllNotFalse && assertLen) {
+            e.preventDefault()
             await axios.post(BACKEND_PORT+BACKEND_ANNOTATIONS,
                 {
                     id: shortid.generate(),
@@ -216,47 +196,48 @@ function Annotator(props) {
                     </span>
                 </td>
                 <td>
-                    <div className="form-check float-left">
+                    <div className="form-check float-left ">
                         <label className="form-check-label text-left">
-                            <input type="checkbox" className="form-check-label"
+                            <input type="checkbox" className="form-check-input"
                                    name={`align${index}`} value={align[index]}
                                    checked ={align[index]}
                                    onChange={(event) => {
                                        let key=event.target.name;
                                        align[key] = event.target.checked;
                                        setAlign(align)
-                                       console.log(align)
+                                       console.log(align[`align${index}`])
                                    }}
                             />
                             <span className="checkbox-label"> yes (aspect & sentiment) </span>
-                        <br/>
-                            {(align[index]) ? <span role={'img'}>&#10004;</span> : ``}
-                            <br/>
-                            <br/>
-
-                            <input type="checkbox" className="form-check-label"
-                                   name={`aspectNo${index}`} value={align_aspect[index]}  checked ={align_aspect[index]}
+                        </label>
+                    </div>
+                </td>
+                <td>
+                    <div className="form-check float-left">
+                        <label className="form-check-label text-left">
+                            <input type="checkbox" className="form-check-input"
+                                   name={`aspectNo${index}`} value={align_aspect[index]}
+                                   checked ={align_aspect[index]}
                                    onChange={(event) => {
                                        let key=event.target.name;
                                        align_aspect[key] = event.target.checked;
-                                       setAlignAspect(align)
-                                       console.log(align_aspect)
-                                   }}/>
+                                       setAlignAspect(align_aspect);
+                                   }}
+                            />
                             <span className="checkbox-label"> no (aspect) </span>
                             <br/>
 
-                            <input type="checkbox" className="form-check-label" checked={align_sentiment[index]}
+                            <input type="checkbox" className="form-check-input"
+                                   checked={align_sentiment[index]}
                                    name={`sentimentNo${index}`} value={align_sentiment[index]}
                                    onChange={(event) => {
                                        let key=event.target.name;
                                        align_sentiment[key] = event.target.checked;
-                                       setAlignSentiment(align)
-                                       console.log(align_sentiment)
+                                       setAlignSentiment(align_sentiment);
                                    }}
-                                   />
+                            />
                             <span className="checkbox-label"> no (sentiment) </span>
                             <br/>
-                            {(align_aspect[index] || align_sentiment[index]) ? <span role={'img'}>&#10004;</span> : ``}
                         </label>
                     </div>
                 </td>
@@ -289,16 +270,20 @@ function Annotator(props) {
                             return (
 
                                 <div key={ind}>
-                                    <ToggleButton key={ind} type="radio" variant={ANSWER_COLOR[ind]} name="radio"
-                                                  value={ind} checked={cptAnswer === ind}
+                                    <ToggleButton key={ind} type="checkbox" variant={ANSWER_COLOR[ind]} name={ind}
+                                                  value={ind} checked={cptAnswer[index] === String(ind)}
                                                   onChange={(e) => {
-                                                      console.log(cptAnswer)
-                                                      setCptAnswer(state => (state[index] = e.currentTarget.value, state))
+                                                      cptAnswer[index] = e.target.value ;
+                                                      setCptAnswer(cptAnswer);
+                                                      console.log(cptAnswer, cptAnswer[index] === String(ind))
+                                                      // setCptAnswer(state => (state[index] = e.currentTarget.value, state))
                                                   }}>
                                         {answer}
                                     </ToggleButton>
                                     <br/>
-                                </div>)
+                                </div>
+
+                            )
                         })}
                     </ButtonGroup>
                 </div>
@@ -316,11 +301,14 @@ function Annotator(props) {
                         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 </button>
                 <ul className="navbar-nav">
-                    <li className="nav-item active">
+                    <li className="nav-item">
                         <a className="nav-link" href="/home">Home</a>
                     </li>
-                    <li className="nav-item">
+                    <li className="nav-item active">
                         <a className="nav-link" href="/annotation">Annotation <span className="sr-only">(current)</span></a>
+                    </li>
+                    <li className="nav-item ">
+                        <a className="nav-link" href="/wiki">Wiki</a>
                     </li>
 
                 </ul>
@@ -355,10 +343,11 @@ function Annotator(props) {
                     <tr style={{ backgroundColor: "#dadee3"}}>
                         <th style={{'fontSize': "18px"}}>Stationary Period</th>
                         <th style={{"width": "8%", 'fontSize': '18px'}}>Date</th>
-                        <th>Sentence</th>
-                        <th style={{"width": "15%", "fontSize": "18px"}}>
-                            Does this review align with other reviews in this stationary period?
+                        <th>Review</th>
+                        <th style={{"width": "20%", "fontSize": "18px"}} colSpan={2}>
+                            Does this highlighted sentence align with other sentences in this stationary period?
                         </th>
+
                     </tr>
                     </thead>
 

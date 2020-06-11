@@ -1,15 +1,13 @@
 import React from "react";
-import {Container, Row, Col} from "react-bootstrap";
+import {Container} from "react-bootstrap";
 import {Link} from "react-router-dom";
-import username_page from "../components/images/username.png";
-import top from "../components/images/top.png";
-import sentence1 from "../components/images/0.png"
+import roomrenovation from "../components/images/room-renovation.png";
 
 function Home(){
 
 　return (
 
-    <Container className="homepage">
+    <Container fluid className="homepage " style={{"padding-left":"10px", "padding-right":"10px"}}>
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
          <a className="navbar-brand" href="#">Change Point Detection</a>
          <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -17,50 +15,90 @@ function Home(){
          </button>
              <ul className="navbar-nav">
                  <li className="nav-item active">
-                     <a className="nav-link" href="#">Home <span className="sr-only">(current)</span></a>
+                     <a className="nav-link " href="#">Home <span className="sr-only">(current)</span> </a>
                  </li>
                  <li className="nav-item">
-                     <a className="nav-link" href="/annotation">Annotation</a>
+                     <a className="nav-link" href="/annotation">Annotation </a>
+                 </li>
+                 <li className="nav-item">
+                     <a className="nav-link" href="/wiki">Wiki</a>
                  </li>
 
              </ul>
      </nav>
 
 
-        <Row className="">
-            <div>
-            <p class="text-primary" style={{fontWeight:"bold"}}> Welcome to the annotation interface for Change Point Detection</p>
-            </div>
-        </Row>
-
-        <Col>
-            <h2>Instructions</h2>
-
-            <p style={{fontWeight:"bold"}}>Step1: Register Username  </p>
-
-            <p>Go to <Link to="annotation/"> annotation front page </Link>, register your username:</p>
-            <p><img src={username_page} alt="register"/></p>
-
-            <p>Please input an username with all alphabets and longer than 3 characters. Then click on button "Register".</p>
-
-            <p style={{fontWeight:"bold"}}>Step2: Annotate  </p>
-
-            <p>There is a table of contents in  <Link to="annotation/"> annotation front page </Link>.  </p>
-            <p>You could also start from  <Link to="reviews/0"> the first annotation page  </Link> right away. </p>
-
-            <h3>Guidelines for Annotation</h3>
-            <p>Example page: <span class="text-primary">Pool</span> related reviews in <Link to="reviews/25">  page 25  </Link> </p>
-            <p>On the top of the page, the category <span className="text-primary">Pool</span> was highlighted. </p>
-            <p>And it displays the usernames of the annotators who have finished annotating this page.</p>
-            <p><img src={top} alt="pool"/></p>
-            <p>In the table, there are selected reviews for different <span className="text-warning">stationary period</span>.
-            In this example, all the reviews colored orange in  <span className="text-warning">stationary period</span>  represents the reviews in
-            stationary period <b>0</b>.</p>
-            <p><img src={sentence1} alt="example1"/> </p>
+            <header  className="float-left text-primary" style={{fontWeight:"bold"}}>
+                Welcome to the annotation interface for Change Point Detection</header>
+            <br/>
+            <br/>
 
 
-        </Col>
-    </Container>
+
+            <h3 style={{"fontWeight":"bold"}}>Guidelines for Annotation</h3>
+
+            <p>There is a table of contents in  <Link to="annotation/"> annotation front page </Link>.
+                You could also start from  <Link to="reviews/0"> the first annotation page  </Link> right away. </p>
+
+
+            <p>Example page: <span class="text-primary">Room and Renovation</span> related reviews in
+                <Link to="reviews/26">  page 26  </Link> </p>
+            <p>On the top of the page, the category <span className="text-primary">Room and Renovation</span> was highlighted. </p>
+            <p>And it displays the user names of the annotators who have finished annotating this page.</p>
+
+            <p>The <b>goal</b> of this annotaiton task is to decide whether the reviews (in sentiment and aspect) align with
+            other reviews in the same stationary period and whether the reviews indicate changes from one
+            stationary period to the successive stationary period. For more detail, regarding the selection of
+                these reviews, refer to page <Link to="wiki">wiki</Link>.</p>
+
+            <p>In the review table, there are selected reviews for different stationary periods.
+                In the following example, the color of the column <b>Stationary Period</b> for each review indicates
+                the stationary period in which the review is.
+                For each date, there is a review and in which the relevant <b>sentence</b> is highlighted,
+                the topic keywords for the highlighted sentence are hashtagged, which is
+            a reminder for the category on this page. For example, the second sentence is hashtagged with <b>rooms </b>
+             and <b>updating</b>, which are the keywords for categories <b>Room</b> and <b>Renovation</b>.
+            However, when we consider the aspect and the sentiment for each sentence,
+                we focus on the aspect such as <b>Room</b>,
+            that is relevant with the entities (i.e., rooms, pools, restaurants, cafes, parking lot, stuff, etc.) in hotels.
+                <b> Renovation</b> is more like a <i>modification</i> of hotel entities.
+                (A distinction between <i>objects</i> and <i>properties</i>
+                [<a href="https://plato.stanford.edu/entries/object/" >reference</a>] )</p>
+
+            <p><b>(1)</b> read the sentences under their contexts (the reviews around the highlighted sentences)
+                in each stationary period, and get a grasp of the
+                majority sentiment (positive or negative), and the majority aspect,
+                then decide for each sentence whether it aligns with other sentences in this
+                stationary period, regarding sentiment and aspect. </p>
+
+                <p>In the following example, the sentences in the stationary period <b>0</b> are all
+                    about <b>Room</b> (in aspect) and its renovations and are all negative (in sentiment).
+                     Each review in this stationary period aligns with the rest,
+                    therefore each sentence is annotated with <i>yes (aspect & sentiment)</i>.
+                    For example, the second sentence in stationary period <b>1</b>, i.e.,
+            "Please update the hot tubs". On the one hand, under the context "the hot tubs" are in the pools, so the
+            aspect of this sentence is <b>pool</b>  rather than <b>room</b>; on the other hand, the sentence is asking to do the
+            renovation, which means it has a negative sentiment about the hot tubs. Nonetheless, other sentences
+            in this stationary period have positive sentiments about the rooms and renovations. So this sentence
+            is annotated with <b>no</b> both in aspect and sentiment. So is the second-to-last sentence in the
+                stationary period <b>2</b>.
+                </p>
+
+            <p><b>(2)</b> After annotating each sentence in each stationary period, decide whether
+            there is a clear change from one stationary period to the successive one, i.e., more positive,
+            more negative, or no difference. As we can see, from <b>0</b> to <b>1</b> and from <b>1</b> to <b>2</b>,
+            the reviews are mostly becoming more positive regarding <b>Room</b>, so choose <i>More Positive</i> for
+            both questions.</p>
+
+            <p><b>(3)</b> After finishing annotating all the sentences and answering all the questions,
+            please input your name (only in a combination of numbers and alphabets), and click <b>Submit</b>.
+            </p>
+
+            <img src={roomrenovation} alt="example1"/>
+
+            <p></p>
+
+        </Container>
  )
 }
 
