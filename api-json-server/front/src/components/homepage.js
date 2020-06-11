@@ -28,8 +28,8 @@ function Home(){
      </nav>
 
 
-            <header  className="float-left text-primary" style={{fontWeight:"bold"}}>
-                Welcome to the annotation interface for Change Point Detection</header>
+            <header  className="float-left text-primary" style={{fontWeight:"bold", fontSize:"32px"}}>
+                Welcome to the annotation interface for Change Point Detection!</header>
             <br/>
             <br/>
 
@@ -62,14 +62,16 @@ function Home(){
                 we focus on the aspect such as <b>Room</b>,
             that is relevant with the entities (i.e., rooms, pools, restaurants, cafes, parking lot, stuff, etc.) in hotels.
                 <b> Renovation</b> is more like a <i>modification</i> of hotel entities.
-                (A distinction between <i>objects</i> and <i>properties</i>
-                [<a href="https://plato.stanford.edu/entries/object/" >reference</a>] )</p>
+            </p>
 
             <p><b>(1)</b> read the sentences under their contexts (the reviews around the highlighted sentences)
                 in each stationary period, and get a grasp of the
                 majority sentiment (positive or negative), and the majority aspect,
                 then decide for each sentence whether it aligns with other sentences in this
                 stationary period, regarding sentiment and aspect. </p>
+
+        <p> <b>* For each review, the <i>yes</i> checkbox and <i>no</i> checkboxes should be exlusive to each other.
+            You could check one or two <i>no</i> checkboxes, or just check the <i>yes</i> checkbox.</b> </p>
 
                 <p>In the following example, the sentences in the stationary period <b>0</b> are all
                     about <b>Room</b> (in aspect) and its renovations and are all negative (in sentiment).
@@ -91,12 +93,13 @@ function Home(){
             both questions.</p>
 
             <p><b>(3)</b> After finishing annotating all the sentences and answering all the questions,
-            please input your name (only in a combination of numbers and alphabets), and click <b>Submit</b>.
+            please input your user name (only in a combination of numbers and alphabets), and click <b>Submit</b>.
             </p>
+        <p>* <i> When clicked on the checkboxes for questions in the bottom, only after inputing the annotator name,
+            the checkboxes will be checked in interface. Sorry for the inconvenience.</i></p>
 
             <img src={roomrenovation} alt="example1"/>
 
-            <p></p>
 
         </Container>
  )
