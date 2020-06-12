@@ -341,7 +341,7 @@ function Annotator(props) {
                        style={{borderCollapse: "separate", borderSpacing: "5px", "width": "100%"}}>
                     <thead>
                     <tr style={{ backgroundColor: "#dadee3"}}>
-                        <th style={{'fontSize': "18px"}}>Stationary Period</th>
+                        <th style={{'fontSize': "18px"}}>Time Period</th>
                         <th style={{"width": "8%", 'fontSize': '18px'}}>Date</th>
                         <th>Review</th>
                         <th style={{"width": "20%", "fontSize": "18px"}} colSpan={2}>

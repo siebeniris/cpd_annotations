@@ -47,13 +47,13 @@ function Home(){
             <p>And it displays the user names of the annotators who have finished annotating this page.</p>
 
             <p>The <b>goal</b> of this annotaiton task is to decide whether the reviews (in sentiment and aspect) align with
-            other reviews in the same stationary period and whether the reviews indicate changes from one
-            stationary period to the successive stationary period. For more detail, regarding the selection of
+            other reviews in the same time period and whether the reviews indicate changes from one
+            time period to the successive time period. For more detail, regarding the selection of
                 these reviews, refer to page <Link to="wiki">wiki</Link>.</p>
 
-            <p>In the review table, there are selected reviews for different stationary periods.
-                In the following example, the color of the column <b>Stationary Period</b> for each review indicates
-                the stationary period in which the review is.
+            <p>In the review table, there are selected reviews for different time periods.
+                In the following example, the color of the column <b>Time Period</b> for each review indicates
+                the time period in which the review is.
                 For each date, there is a review and in which the relevant <b>sentence</b> is highlighted,
                 the topic keywords for the highlighted sentence are hashtagged, which is
             a reminder for the category on this page. For example, the second sentence is hashtagged with <b>rooms </b>
@@ -65,29 +65,48 @@ function Home(){
             </p>
 
             <p><b>(1)</b> read the sentences under their contexts (the reviews around the highlighted sentences)
-                in each stationary period, and get a grasp of the
+                in each time period, and get a grasp of the
                 majority sentiment (positive or negative), and the majority aspect,
                 then decide for each sentence whether it aligns with other sentences in this
-                stationary period, regarding sentiment and aspect. </p>
+                time period, regarding sentiment and aspect. </p>
+            <div>
+                <b>* For each review, </b>
+                <ul>
+                    <li> check the <i>yes(aspect & sentiment) </i> checkbox <i>if and only if</i>  you find both the sentiment and aspect
+                        of the highlighted sentence align with the other sentences in the same period
+                    </li>
+                    <li>
+                        check the <i>no (aspect) </i> checkbox <i> if and only if </i> you find the aspect of the highlighted
+                        sentence doesn't align and the sentiment of the highlighted sentence does align with the other sentences in the same period
 
-        <p> <b>* For each review, the <i>yes</i> checkbox and <i>no</i> checkboxes should be exlusive to each other.
-            You could check one or two <i>no</i> checkboxes, or just check the <i>yes</i> checkbox.</b> </p>
+                    </li>
+                    <li>
+                        check the <i>no (sentiment) </i> checkbox <i> if and only if </i> you find the sentiment of the highlighted
+                        sentence doesn't align and the aspect of the highlighted sentence does align with the other sentences in the same period
 
-                <p>In the following example, the sentences in the stationary period <b>0</b> are all
+                    </li>
+                </ul>
+            </div>
+
+
+           <p><b> The <i>yes</i> checkbox and <i>no</i> checkboxes should be exlusive to each other.
+            You could check one or two <i>no</i> checkboxes, or only check the <i>yes</i> checkbox.</b> </p>
+
+                <p>In the following example, the sentences in the time period <b>0</b> are all
                     about <b>Room</b> (in aspect) and its renovations and are all negative (in sentiment).
-                     Each review in this stationary period aligns with the rest,
+                     Each review in this time period aligns with the rest,
                     therefore each sentence is annotated with <i>yes (aspect & sentiment)</i>.
-                    For example, the second sentence in stationary period <b>1</b>, i.e.,
+                    For example, the second sentence in time period <b>1</b>, i.e.,
             "Please update the hot tubs". On the one hand, under the context "the hot tubs" are in the pools, so the
             aspect of this sentence is <b>pool</b>  rather than <b>room</b>; on the other hand, the sentence is asking to do the
             renovation, which means it has a negative sentiment about the hot tubs. Nonetheless, other sentences
-            in this stationary period have positive sentiments about the rooms and renovations. So this sentence
+            in this time period have positive sentiments about the rooms and renovations. So this sentence
             is annotated with <b>no</b> both in aspect and sentiment. So is the second-to-last sentence in the
-                stationary period <b>2</b>.
+                time period <b>2</b>.
                 </p>
 
-            <p><b>(2)</b> After annotating each sentence in each stationary period, decide whether
-            there is a clear change from one stationary period to the successive one, i.e., more positive,
+            <p><b>(2)</b> After annotating each sentence in each time period, decide whether
+            there is a clear change from one time period to the successive one, i.e., more positive,
             more negative, or no difference. As we can see, from <b>0</b> to <b>1</b> and from <b>1</b> to <b>2</b>,
             the reviews are mostly becoming more positive regarding <b>Room</b>, so choose <i>More Positive</i> for
             both questions.</p>
