@@ -73,16 +73,22 @@ function Home(){
                 <b>* For each review, </b>
                 <ul>
                     <li> check the <i>yes(aspect & sentiment) </i> checkbox <i>if and only if</i>  you find both the sentiment and aspect
-                        of the highlighted sentence align with the other sentences in the same period
+                        of the highlighted sentence align with the other sentences in the same period (i)
                     </li>
                     <li>
                         check the <i>no (aspect) </i> checkbox <i> if and only if </i> you find the aspect of the highlighted
-                        sentence doesn't align and the sentiment of the highlighted sentence does align with the other sentences in the same period
+                        sentence doesn't align and the sentiment of the highlighted sentence does align with the other sentences in the same period (ii)
 
                     </li>
                     <li>
                         check the <i>no (sentiment) </i> checkbox <i> if and only if </i> you find the sentiment of the highlighted
-                        sentence doesn't align and the aspect of the highlighted sentence does align with the other sentences in the same period
+                        sentence doesn't align and the aspect of the highlighted sentence does align with the other sentences in the same period (iii)
+
+                    </li>
+                    <li>
+                        check the <i>not clear (sentiment) </i> checkbox <i> if and only if </i> you find the sentiment of the highlighted (iv)
+                        sentence not clear to determine.
+
 
                     </li>
                 </ul>
@@ -90,19 +96,38 @@ function Home(){
 
 
            <p><b> The <i>yes</i> checkbox and <i>no</i> checkboxes should be exlusive to each other.
-            You could check one or two <i>no</i> checkboxes, or only check the <i>yes</i> checkbox.</b> </p>
+            You could check one or two <i>no</i> checkboxes, or only check the <i>yes</i> checkbox. </b> </p>
+
+        <p><b>The <i>no (sentiment) </i> checkbox and <i>not clear (sentiment)</i> checkbox are exclusive to each other</b></p>
+        <div>
+            The possible choices for question "Does this highlighted sentence align with other sentences in this time period":
+            <ul>
+                <li> (i)</li>
+
+                <li>(ii) </li>
+                <li>(ii) and (iii)</li>
+                <li>(ii) and (iv)</li>
+                <li>(iii)</li>
+                <li>(iv)</li>
+
+            </ul>
+
+        </div>
 
                 <p>In the following example, the sentences in the time period <b>0</b> are all
                     about <b>Room</b> (in aspect) and its renovations and are all negative (in sentiment).
                      Each review in this time period aligns with the rest,
                     therefore each sentence is annotated with <i>yes (aspect & sentiment)</i>.
-                    For example, the second sentence in time period <b>1</b>, i.e.,
+                    For example, the first sentence's sentiment in time period <b>1</b> is hard to determine under the context,
+                    so <i>not clear (sentiment)</i> is checked.
+                   And the second sentence in time period <b>1</b>, i.e.,
             "Please update the hot tubs". On the one hand, under the context "the hot tubs" are in the pools, so the
             aspect of this sentence is <b>pool</b>  rather than <b>room</b>; on the other hand, the sentence is asking to do the
             renovation, which means it has a negative sentiment about the hot tubs. Nonetheless, other sentences
-            in this time period have positive sentiments about the rooms and renovations. So this sentence
-            is annotated with <b>no</b> both in aspect and sentiment. So is the second-to-last sentence in the
-                time period <b>2</b>.
+            in this time period have positive sentiments about the rooms in terms of renovations. So this sentence
+            is annotated with <b>no</b> both in aspect and sentiment.
+                    The second-to-last sentence in time period <b>2</b> is about <b>pool</b> rather than <b>room</b>,
+                    but the sentiment leans in being positive, so only <i>no (aspect) </i>  is checked.
                 </p>
 
             <p><b>(2)</b> After annotating each sentence in each time period, decide whether

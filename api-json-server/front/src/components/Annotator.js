@@ -6,7 +6,7 @@ import axios from 'axios';
 import shortid from "shortid";
 
 
-const CPT_ANSWERS = ["More Positive", "More Negative", "No Difference"]
+const CPT_ANSWERS = ["0 More Positive", "1 More Negative", "2 No Difference"]
 const ANSWER_COLOR = ["success", "danger", "warning"]
 
 function Annotator(props) {
@@ -24,6 +24,7 @@ function Annotator(props) {
     const [align, setAlign] = useState({});
     const [align_aspect, setAlignAspect] = useState({});
     const [align_sentiment, setAlignSentiment] = useState({});
+    const [not_clear, setNotClearSentiment] = useState({})
 
 
     // load data.
@@ -100,10 +101,11 @@ function Annotator(props) {
                 "id": review.id,
                 "align": align[`align`+String(index)],
                 "align_aspect": align_aspect[`aspectNo`+String(index)],
-                "align_sentiment": align_sentiment[`sentimentNo`+String(index)]
+                "align_sentiment": align_sentiment[`sentimentNo`+String(index)],
+                "not_clear": not_clear[`notClear`+String(index)]
             })
             annots.push(align[`align`+String(index)]||align_aspect[`aspectNo`+String(index)]
-                ||align_sentiment[`sentimentNo`+String(index)])
+                ||align_sentiment[`sentimentNo`+String(index)]||not_clear[`notClear`+String(index)])
         })
         console.log(`annotations:`, annotations)
         console.log(`annots`, annots)
@@ -111,7 +113,6 @@ function Annotator(props) {
         var areAllNotFalse = annots.every(function (i) {
             return i !== undefined;
         })
-        console.log(`annots:`, annots)
 
         let assertLen = Object.keys(cptAnswer).length === cpts.length - 1
 
@@ -238,6 +239,19 @@ function Annotator(props) {
                             />
                             <span className="checkbox-label"> no (sentiment) </span>
                             <br/>
+
+                            <input type="checkbox" className="form-check-input"
+                                   checked={not_clear[index]}
+                                   name={`notClear${index}`} value={not_clear[index]}
+                                   onChange={(event) => {
+                                       let key=event.target.name;
+                                       not_clear[key] = event.target.checked;
+                                       setNotClearSentiment(not_clear);
+                                   }}
+                            />
+                            <span className="checkbox-label"> not clear (sentiment) </span>
+                            <br/>
+
                         </label>
                     </div>
                 </td>
@@ -257,38 +271,8 @@ function Annotator(props) {
         let c = cpts2.map(function (e, i) {
             return [e, cpts1[i]];
         })
+        return c
 
-        return c.map((a, index) => {
-            return (
-                <div key={index}>
-                    <span style={{
-                        textAlign: "center",
-                        "fontWeight": "bold"
-                    }}> {index}. What is the change from {a.join(" to ")} ? </span>
-                    <ButtonGroup toggle>
-                        {CPT_ANSWERS.map((answer, ind) => {
-                            return (
-
-                                <div key={ind}>
-                                    <ToggleButton key={ind} type="checkbox" variant={ANSWER_COLOR[ind]} name={ind}
-                                                  value={ind} checked={cptAnswer[index] === String(ind)}
-                                                  onChange={(e) => {
-                                                      cptAnswer[index] = e.target.value ;
-                                                      setCptAnswer(cptAnswer);
-                                                      console.log(cptAnswer, cptAnswer[index] === String(ind))
-                                                      // setCptAnswer(state => (state[index] = e.currentTarget.value, state))
-                                                  }}>
-                                        {answer}
-                                    </ToggleButton>
-                                    <br/>
-                                </div>
-
-                            )
-                        })}
-                    </ButtonGroup>
-                </div>
-            )
-        })
     }
 
     return (
@@ -345,7 +329,7 @@ function Annotator(props) {
                         <th style={{"width": "8%", 'fontSize': '18px'}}>Date</th>
                         <th>Review</th>
                         <th style={{"width": "20%", "fontSize": "18px"}} colSpan={2}>
-                            Does this highlighted sentence align with other sentences in this stationary period?
+                            Does this highlighted sentence align with other sentences in this time period?
                         </th>
 
                     </tr>
@@ -354,18 +338,46 @@ function Annotator(props) {
                     <tbody>
                     {(reviews && reviews.length > 0) ? (
                         reviews.map((review, index) => renderReview(review, index))
-                    ) : (
-                        null
-                    )}
+                    ) : (null)}
                     </tbody>
 
                 </Table>
             </Row>
 
-            <Row>
-                {(cpts && cpts.length > 0) ? (crosszip(cpts)) : ` `}
+                {(cpts && cpts.length > 0) ? (
+                    crosszip(cpts).map((a, index) => {
+                    return (
+                    <Row className="d-block " key={index}>
+                    <span style={{
+                    textAlign: "center",
+                    "fontWeight": "bold"
+                }}> {index}. What is the change from time period {a.join(" to time period ")} ? </span>
+                    <ButtonGroup toggle>
+                    {CPT_ANSWERS.map((answer, ind) => {
+                        return (
+                            <ToggleButton key={ind} type="checkbox" variant={ANSWER_COLOR[ind]} name={ind}
+                                          value={ind} checked={cptAnswer[index] === String(ind)}
+                                          onChange={(e) => {
+                                              cptAnswer[index] = e.target.value;
+                                              setCptAnswer(cptAnswer);
+                                              console.log(cptAnswer, cptAnswer[index] === String(ind))
+                                              console.log(e.target.checked)
+                                          }}>
+                                {answer}
+                            </ToggleButton>
+                        )})}
+                    </ButtonGroup>
+                        {(cptAnswer )? (
+                            (Object.keys(cptAnswer).length)?(
+                          <p> {cptAnswer[index]} chosen</p>):(null)
+                        ):(null)}
+                        <br/>
+                        <br/>
 
-            </Row>
+
+
+                    </Row>)})) : ` `}
+            <br/>
 
             <Row className="align-content-end">
                 <Col>
