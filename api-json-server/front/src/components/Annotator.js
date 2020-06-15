@@ -329,7 +329,7 @@ function Annotator(props) {
                         <th style={{"width": "8%", 'fontSize': '18px'}}>Date</th>
                         <th>Review</th>
                         <th style={{"width": "20%", "fontSize": "18px"}} colSpan={2}>
-                            Does this highlighted sentence align with other sentences in this time period?
+                            Does the highlighted sentence align with the majority of sentences in this time period?
                         </th>
 
                     </tr>
