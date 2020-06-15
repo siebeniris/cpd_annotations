@@ -41,8 +41,7 @@ function Home(){
                 You could also start from  <Link to="reviews/0"> the first annotation page  </Link> right away. </p>
 
 
-            <p>Example page: <span class="text-primary">Room and Renovation</span> related reviews in
-                <Link to="reviews/26">  page 26  </Link> </p>
+            <p>Example page: <span class="text-primary">Room and Renovation</span> related reviews. </p>
             <p>On the top of the page, the category <span className="text-primary">Room and Renovation</span> was highlighted. </p>
             <p>And it displays the user names of the annotators who have finished annotating this page.</p>
 
@@ -126,8 +125,9 @@ function Home(){
             renovation, which means it has a negative sentiment about the hot tubs. Nonetheless, other sentences
             in this time period have positive sentiments about the rooms in terms of renovations. So this sentence
             is annotated with <b>no</b> both in aspect and sentiment.
-                    The second-to-last sentence in time period <b>2</b> is about <b>pool</b> rather than <b>room</b>,
-                    but the sentiment leans in being positive, so only <i>no (aspect) </i>  is checked.
+                    The second-to-last sentence in time period <b>2</b> is not about <b>room</b>,
+                    and the sentiment is not clear for the stay in El San Juan Hotel. So the <i>no (aspect)</i> and
+                <i>not clear (sentiment)</i> are checked.
                 </p>
 
             <p><b>(2)</b> After annotating each sentence in each time period, decide whether

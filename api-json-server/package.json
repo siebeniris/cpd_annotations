@@ -1,12 +1,12 @@
 {
-  "homepage": "http://siebeniris.github.io/cpd_annotations",
+  "homepage": "http://dev-box.trustyou.com/",
   "name": "api-json-server",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
   "scripts": {
     "client": "npm run start --prefix front",
-    "server": "json-server new_db.json --no-cors true",
+    "server": "json-server db.json --no-cors true",
     "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
     "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -22,10 +22,12 @@
     "fs": "0.0.1-security",
     "http-proxy-middleware": "^1.0.4",
     "lowdb": "^1.0.0",
+    "marked": "^1.1.0",
     "path": "^0.12.7",
     "qs": "^6.9.4",
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.1",
+    "react-markdown": "^4.3.1",
     "react-router-dom": "^5.2.0",
     "react-select": "^3.1.0",
     "shortid": "^2.2.15",

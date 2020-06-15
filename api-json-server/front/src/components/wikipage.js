@@ -1,9 +1,28 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {Container} from "react-bootstrap";
-import {Link} from "react-router-dom";
-import roomrenovation from "../components/images/room-renovation.png";
+import ReactMarkdown from "react-markdown";
+
+const wikimd = require('../components/wiki/Change Point Detection.md');
+
+
 
 function Wiki() {
+    const [text, setText] = useState(null);
+
+    useEffect(()=>{
+        if(!text){
+            getText()
+        }
+    })
+
+    const getText =() =>{
+        fetch(wikimd).then(response =>{
+            return response.text()
+        }).then(text =>{
+            setText(text)
+        })
+    }
+
     return (
 
         <Container  className="homepage" style={{"padding-left":"10px", "padding-right":"10px"}}>
@@ -26,8 +45,11 @@ function Wiki() {
                 </ul>
             </nav>
 
-            <Container>
-                Coming Soon....
+            <Container fluid>
+                <ReactMarkdown source={text}/>
+
+
+
             </Container>
         </Container>)
 
