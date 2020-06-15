@@ -99,15 +99,16 @@ function Home(){
 
         <p><b>The <i>no (sentiment) </i> checkbox and <i>not clear (sentiment)</i> checkbox are exclusive to each other</b></p>
         <div>
-            The possible choices for question "Does this highlighted sentence align with other sentences in this time period":
+            The possible choices for question "Does this highlighted sentence align with the majority of sentences in this time period":
             <ul>
                 <li> (i)</li>
 
                 <li>(ii) </li>
-                <li>(ii) and (iii)</li>
-                <li>(ii) and (iv)</li>
+
                 <li>(iii)</li>
                 <li>(iv)</li>
+                <li>(ii) and (iii)</li>
+                <li>(ii) and (iv)</li>
 
             </ul>
 
