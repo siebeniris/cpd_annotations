@@ -72,21 +72,21 @@ function Home(){
                 <b>* For each review, </b>
                 <ul>
                     <li> check the <i>yes(aspect & sentiment) </i> checkbox <i>if and only if</i>  you find both the sentiment and aspect
-                        of the highlighted sentence align with the other sentences in the same period (i)
+                        of the highlighted sentence align with the majority of the sentences in the same period (i)
                     </li>
                     <li>
                         check the <i>no (aspect) </i> checkbox <i> if and only if </i> you find the aspect of the highlighted
-                        sentence doesn't align and the sentiment of the highlighted sentence does align with the other sentences in the same period (ii)
+                        sentence doesn't align with the majority of sentences in the same time period (ii)
 
                     </li>
                     <li>
                         check the <i>no (sentiment) </i> checkbox <i> if and only if </i> you find the sentiment of the highlighted
-                        sentence doesn't align and the aspect of the highlighted sentence does align with the other sentences in the same period (iii)
+                        sentence doesn't align with the sentiment of the majority of sentences in the same time period (iii)
 
                     </li>
                     <li>
-                        check the <i>not clear (sentiment) </i> checkbox <i> if and only if </i> you find the sentiment of the highlighted (iv)
-                        sentence not clear to determine.
+                        check the <i>not clear (sentiment) </i> checkbox <i> if and only if </i> you find the sentiment of the highlighted
+                        sentence not clear to determine.(iv)
 
 
                     </li>
