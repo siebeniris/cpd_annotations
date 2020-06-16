@@ -41,9 +41,10 @@ function Home(){
                 You could also start from  <Link to="reviews/0"> the first annotation page  </Link> right away. </p>
 
 
-            <p>Example page: <span class="text-primary">Room and Renovation</span> related reviews. </p>
-            <p>On the top of the page, the category <span className="text-primary">Room and Renovation</span> was highlighted. </p>
-            <p>And it displays the user names of the annotators who have finished annotating this page.</p>
+            <p>Example page: <b>Room and Renovation</b> related reviews. </p>
+
+            <p>On the top of the page, the category <b>Room and Renovation</b> was highlighted.
+                And it displays the user names of the annotators who have finished annotating this page.</p>
 
             <p>The <b>goal</b> of this annotaiton task is to decide whether the reviews (in sentiment and aspect) align with
             other reviews in the same time period and whether the reviews indicate changes from one
@@ -81,15 +82,10 @@ function Home(){
                     </li>
                     <li>
                         check the <i>no (sentiment) </i> checkbox <i> if and only if </i> you find the sentiment of the highlighted
-                        sentence doesn't align with the sentiment of the majority of sentences in the same time period (iii)
+                        sentence doesn't align (or not clear) with the sentiment of the majority of sentences in the same time period (iii)
 
                     </li>
-                    <li>
-                        check the <i>not clear (sentiment) </i> checkbox <i> if and only if </i> you find the sentiment of the highlighted
-                        sentence not clear to determine.(iv)
 
-
-                    </li>
                 </ul>
             </div>
 
@@ -102,22 +98,20 @@ function Home(){
             The possible choices for question "Does this highlighted sentence align with the majority of sentences in this time period":
             <ul>
                 <li> (i)</li>
-
                 <li>(ii) </li>
-
                 <li>(iii)</li>
-                <li>(iv)</li>
                 <li>(ii) and (iii)</li>
-                <li>(ii) and (iv)</li>
 
             </ul>
 
         </div>
 
                 <p>In the following example, the sentences in the time period <b>0</b> are all
-                    about <b>Room</b> (in aspect) and its renovations and are all negative (in sentiment).
-                     Each review in this time period aligns with the rest,
-                    therefore each sentence is annotated with <i>yes (aspect & sentiment)</i>.
+                    about <b>Room</b> (in aspect) and its renovations and are mostly negative (in sentiment).
+                     Most reviews in this time period align with the rest,
+                    therefore most sentence is annotated with <i>yes (aspect & sentiment)</i>. Except
+                    the fifth sentence, of which sentiment is positive and the aspect aligns with the rest, so
+                    <i>no (sentiment)</i> is checked.
                     For example, the first sentence's sentiment in time period <b>1</b> is hard to determine under the context,
                     so <i>not clear (sentiment)</i> is checked.
                    And the second sentence in time period <b>1</b>, i.e.,
@@ -126,9 +120,8 @@ function Home(){
             renovation, which means it has a negative sentiment about the hot tubs. Nonetheless, other sentences
             in this time period have positive sentiments about the rooms in terms of renovations. So this sentence
             is annotated with <b>no</b> both in aspect and sentiment.
-                    The second-to-last sentence in time period <b>2</b> is not about <b>room</b>,
-                    and the sentiment is not clear for the stay in El San Juan Hotel. So the <i>no (aspect)</i> and
-                <i>not clear (sentiment)</i> are checked.
+                    The fourth-to-last sentence in time period <b>2</b> is not about <b>room</b>,
+                    and but the sentiment is still positive, which aligns with the rest. So the <i>no (aspect)</i>  is checked.
                 </p>
 
             <p><b>(2)</b> After annotating each sentence in each time period, decide whether
@@ -137,7 +130,7 @@ function Home(){
             the reviews are mostly becoming more positive regarding <b>Room</b>, so choose <i>More Positive</i> for
             both questions.</p>
 
-            <p><b>(3)</b> After finishing annotating all the sentences and answering all the questions,
+            <p><b>(3)</b> After finishing annotating all the sentences and answering all the questions on one page,
             please input your user name (only in a combination of numbers and alphabets), and click <b>Submit</b>.
             </p>
         <p>* <i> When clicked on the checkboxes for questions in the bottom, only after inputing the annotator name,

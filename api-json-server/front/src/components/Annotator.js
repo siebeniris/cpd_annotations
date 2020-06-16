@@ -24,7 +24,7 @@ function Annotator(props) {
     const [align, setAlign] = useState({});
     const [align_aspect, setAlignAspect] = useState({});
     const [align_sentiment, setAlignSentiment] = useState({});
-    const [not_clear, setNotClearSentiment] = useState({})
+    // const [not_clear, setNotClearSentiment] = useState({})
 
 
     // load data.
@@ -58,7 +58,7 @@ function Annotator(props) {
 
         setReviews(review_list);
         setName(res.data['name'])
-        setCategory(res.data['review_list'][0]['category'])
+        setCategory(res.data['categories'])
 
         // get distinct list of change points. [0,1,2]
         const cpts_ = []
@@ -102,10 +102,11 @@ function Annotator(props) {
                 "align": align[`align`+String(index)],
                 "align_aspect": align_aspect[`aspectNo`+String(index)],
                 "align_sentiment": align_sentiment[`sentimentNo`+String(index)],
-                "not_clear": not_clear[`notClear`+String(index)]
+                // "not_clear": not_clear[`notClear`+String(index)]
             })
             annots.push(align[`align`+String(index)]||align_aspect[`aspectNo`+String(index)]
-                ||align_sentiment[`sentimentNo`+String(index)]||not_clear[`notClear`+String(index)])
+                ||align_sentiment[`sentimentNo`+String(index)])
+                // ||not_clear[`notClear`+String(index)])
         })
         console.log(`annotations:`, annotations)
         console.log(`annots`, annots)
@@ -186,13 +187,8 @@ function Annotator(props) {
                     <br/>
                     <br/>
                     <span  style={{fontWeight:"bold", fontColor:"purple"}} >
-                        {(review.offset_topics && review.offset_topics.length>0)? (
-
-                        review.offset_topics.map( (offset, index)=>
-                            {
-                                return "#" +review.review.substring(review.offset_sent[0]+offset[0], review.offset_sent[0]+offset[1])
-                            }
-                        )
+                        {(review.hashtags && review.hashtags.length>0)? (
+                             "#"+ review.hashtags.join(" #")
                     ):(" ")}
                     </span>
                 </td>
@@ -240,17 +236,17 @@ function Annotator(props) {
                             <span className="checkbox-label"> no (sentiment) </span>
                             <br/>
 
-                            <input type="checkbox" className="form-check-input"
-                                   checked={not_clear[index]}
-                                   name={`notClear${index}`} value={not_clear[index]}
-                                   onChange={(event) => {
-                                       let key=event.target.name;
-                                       not_clear[key] = event.target.checked;
-                                       setNotClearSentiment(not_clear);
-                                   }}
-                            />
-                            <span className="checkbox-label"> not clear (sentiment) </span>
-                            <br/>
+                            {/*<input type="checkbox" className="form-check-input"*/}
+                            {/*       checked={not_clear[index]}*/}
+                            {/*       name={`notClear${index}`} value={not_clear[index]}*/}
+                            {/*       onChange={(event) => {*/}
+                            {/*           let key=event.target.name;*/}
+                            {/*           not_clear[key] = event.target.checked;*/}
+                            {/*           setNotClearSentiment(not_clear);*/}
+                            {/*       }}*/}
+                            {/*/>*/}
+                            {/*<span className="checkbox-label"> not clear (sentiment) </span>*/}
+                            {/*<br/>*/}
 
                         </label>
                     </div>
