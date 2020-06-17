@@ -1,13 +1,10 @@
 import  {BACKEND_PORT, BACKEND_REVIEWS, BACKEND_ANNOTATIONS} from './config'
 import React, {useState, useEffect} from "react";
+import {RadioGroup, Radio} from "react-radio-group";
 import Table from 'react-bootstrap/Table';
-import {Container, Row, Col, Button, ToggleButton, ButtonGroup} from 'react-bootstrap';
+import {Container, Row, Col, Button} from 'react-bootstrap';
 import axios from 'axios';
 import shortid from "shortid";
-
-
-const CPT_ANSWERS = ["0 More Positive", "1 More Negative", "2 No Difference"]
-const ANSWER_COLOR = ["success", "danger", "warning"]
 
 function Annotator(props) {
     const [reviews, setReviews] = useState(null);
@@ -24,7 +21,6 @@ function Annotator(props) {
     const [align, setAlign] = useState({});
     const [align_aspect, setAlignAspect] = useState({});
     const [align_sentiment, setAlignSentiment] = useState({});
-    // const [not_clear, setNotClearSentiment] = useState({})
 
 
     // load data.
@@ -100,13 +96,11 @@ function Annotator(props) {
             annotations.push({
                 "id": review.id,
                 "align": align[`align`+String(index)],
-                "align_aspect": align_aspect[`aspectNo`+String(index)],
-                "align_sentiment": align_sentiment[`sentimentNo`+String(index)],
-                // "not_clear": not_clear[`notClear`+String(index)]
+                "no_aspect": align_aspect[`aspectNo`+String(index)],
+                "no_sentiment": align_sentiment[`sentimentNo`+String(index)]
             })
             annots.push(align[`align`+String(index)]||align_aspect[`aspectNo`+String(index)]
                 ||align_sentiment[`sentimentNo`+String(index)])
-                // ||not_clear[`notClear`+String(index)])
         })
         console.log(`annotations:`, annotations)
         console.log(`annots`, annots)
@@ -236,17 +230,6 @@ function Annotator(props) {
                             <span className="checkbox-label"> no (sentiment) </span>
                             <br/>
 
-                            {/*<input type="checkbox" className="form-check-input"*/}
-                            {/*       checked={not_clear[index]}*/}
-                            {/*       name={`notClear${index}`} value={not_clear[index]}*/}
-                            {/*       onChange={(event) => {*/}
-                            {/*           let key=event.target.name;*/}
-                            {/*           not_clear[key] = event.target.checked;*/}
-                            {/*           setNotClearSentiment(not_clear);*/}
-                            {/*       }}*/}
-                            {/*/>*/}
-                            {/*<span className="checkbox-label"> not clear (sentiment) </span>*/}
-                            {/*<br/>*/}
 
                         </label>
                     </div>
@@ -271,6 +254,10 @@ function Annotator(props) {
 
     }
 
+
+    const cptQuestions = e =>{
+        console.log(e.target)
+    }
     return (
 
         <Container fluid className="App">
@@ -348,25 +335,19 @@ function Annotator(props) {
                     textAlign: "center",
                     "fontWeight": "bold"
                 }}> {index}. What is the change from time period {a.join(" to time period ")} ? </span>
-                    <ButtonGroup toggle>
-                    {CPT_ANSWERS.map((answer, ind) => {
-                        return (
-                            <ToggleButton key={ind} type="checkbox" variant={ANSWER_COLOR[ind]} name={ind}
-                                          value={ind} checked={cptAnswer[index] === String(ind)}
-                                          onChange={(e) => {
-                                              cptAnswer[index] = e.target.value;
-                                              setCptAnswer(cptAnswer);
-                                              console.log(cptAnswer, cptAnswer[index] === String(ind))
-                                              console.log(e.target.checked)
-                                          }}>
-                                {answer}
-                            </ToggleButton>
-                        )})}
-                    </ButtonGroup>
-                        {(cptAnswer )? (
-                            (Object.keys(cptAnswer).length)?(
-                          <p> {cptAnswer[index]} chosen</p>):(null)
-                        ):(null)}
+
+                        <RadioGroup key={index} name={String(index)} selectedValue={cptAnswer[index]}
+                                    onChange={(value)=>{
+                                        cptAnswer[index]=value
+                                        console.log(cptAnswer)
+                                    }}>
+
+                            <Radio variant="success" value="a"/>More Positive{` `}
+                            <Radio value="b"/>More Negative{` `}
+                            <Radio value="c"/>No Difference
+                        </RadioGroup>
+
+
                         <br/>
                         <br/>
 

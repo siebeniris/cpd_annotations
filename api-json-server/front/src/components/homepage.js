@@ -48,7 +48,7 @@ function Home(){
 
             <p>The <b>goal</b> of this annotaiton task is to decide whether the reviews (in sentiment and aspect) align with
             other reviews in the same time period and whether the reviews indicate changes from one
-            time period to the successive time period. For more detail, regarding the selection of
+            time period to the successive time period. For more detail, regarding the technicality of selection of
                 these reviews, refer to page <Link to="wiki">wiki</Link>.</p>
 
             <p>In the review table, there are selected reviews for different time periods.
@@ -56,11 +56,11 @@ function Home(){
                 the time period in which the review is.
                 For each date, there is a review and in which the relevant <b>sentence</b> is highlighted,
                 the topic keywords for the highlighted sentence are hashtagged, which is
-            a reminder for the category on this page. For example, the second sentence is hashtagged with <b>rooms </b>
+            a reminder for the category on this page. For example, the first sentence is hashtagged with <b>rooms </b>
              and <b>updating</b>, which are the keywords for categories <b>Room</b> and <b>Renovation</b>.
             However, when we consider the aspect and the sentiment for each sentence,
                 we focus on the aspect such as <b>Room</b>,
-            that is relevant with the entities (i.e., rooms, pools, restaurants, cafes, parking lot, stuff, etc.) in hotels.
+            that is relevant with the entities (i.e., rooms, pools, restaurants, etc.) in hotels.
                 <b> Renovation</b> is more like a <i>modification</i> of hotel entities.
             </p>
 
@@ -132,9 +132,9 @@ function Home(){
 
             <p><b>(3)</b> After finishing annotating all the sentences and answering all the questions on one page,
             please input your user name (only in a combination of numbers and alphabets), and click <b>Submit</b>.
+                After <b>Submit</b>, you could change your answer and <b>Submit</b> again, or you could go to next page
+                to continue.
             </p>
-        <p>* <i> When clicked on the checkboxes for questions in the bottom, only after inputing the annotator name,
-            the checkboxes will be checked in interface. Sorry for the inconvenience.</i></p>
 
             <img src={roomrenovation} alt="example1"/>
 
