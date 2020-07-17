@@ -44,6 +44,11 @@ function AnnotationFront() {
                         <a className="nav-link" href="/wiki">Wiki</a>
                     </li>
 
+                    <li className="nav-item ">
+                        <a className="nav-link" href="/datasetFront"> Dataset </a>
+                    </li>
+
+
                 </ul>
             </nav>
 

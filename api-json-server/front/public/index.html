@@ -3,7 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <link href='https://fonts.googleapis.com/css?family=Lato:300,900' rel='stylesheet' type='text/css'>
+
+
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta
       name="description"
@@ -29,6 +32,17 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+
+    <svg width=960 height=500>
+        <defs> <pattern id="half-fill" width="10" height="10">
+            <line x1="2.5" x2="2.5" y1="0" y2="10" class="dedicated-line"></line>
+            <line x1="7.5" x2="7.5" y1="0" y2="10" class="embedded-line"></line>
+        </pattern> </defs>
+    </svg>
+    <script src="https://d3js.org/d3.v4.js"></script>
+    <script src="https://cdn.rawgit.com/susielu/d3-annotation/master/d3-annotation.js"></script>
+
+
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.

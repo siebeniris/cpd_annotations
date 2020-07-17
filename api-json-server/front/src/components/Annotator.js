@@ -18,7 +18,6 @@ function Annotator(props) {
     const [cpts, setCpts] = useState(null);
     const [cptAnswer, setCptAnswer] = useState({});
 
-    const [align, setAlign] = useState({});
     const [align_aspect, setAlignAspect] = useState({});
     const [align_sentiment, setAlignSentiment] = useState({});
 
@@ -68,7 +67,9 @@ function Annotator(props) {
         if (parseInt(reviewId) === 0) {
             setPrev("0")
             setNext(String(parseInt(reviewId) + 1))
-        } else {
+        } else if(parseInt(reviewId)=== 414){
+            setPrev(String(parseInt(reviewId) - 1))
+        } else{
             setPrev(String(parseInt(reviewId) - 1))
             setNext(String(parseInt(reviewId) + 1))
         }
@@ -78,11 +79,10 @@ function Annotator(props) {
     const clickReset = async () => {
         setAlignSentiment({})
         setAlignAspect({})
-        setAlign({})
         setCptAnswer({})
         window.location.reload(false)
 
-        console.log(align_sentiment,align_aspect, align, cptAnswer);
+        console.log(align_sentiment,align_aspect, cptAnswer);
     }
 
     // click submit
@@ -95,12 +95,10 @@ function Annotator(props) {
         reviews.map((review, index) => {
             annotations.push({
                 "id": review.id,
-                "align": align[`align`+String(index)],
-                "no_aspect": align_aspect[`aspectNo`+String(index)],
-                "no_sentiment": align_sentiment[`sentimentNo`+String(index)]
+                "yes_aspect": align_aspect[`aspectYes`+String(index)],
+                "yes_sentiment": align_sentiment[`sentimentYes`+String(index)]
             })
-            annots.push(align[`align`+String(index)]||align_aspect[`aspectNo`+String(index)]
-                ||align_sentiment[`sentimentNo`+String(index)])
+            annots.push( align_aspect[`aspectYes`+String(index)] ||align_sentiment[`sentimentYes`+String(index)])
         })
         console.log(`annotations:`, annotations)
         console.log(`annots`, annots)
@@ -111,9 +109,9 @@ function Annotator(props) {
 
         let assertLen = Object.keys(cptAnswer).length === cpts.length - 1
 
-        if (areAllNotFalse && assertLen) {
-            e.preventDefault()
-            await axios.post(BACKEND_PORT+BACKEND_ANNOTATIONS,
+
+        e.preventDefault()
+        await axios.post(BACKEND_PORT+BACKEND_ANNOTATIONS,
                 {
                     id: shortid.generate(),
                     date: now,
@@ -125,13 +123,11 @@ function Annotator(props) {
                 }).then(
                 alert("Submitted!")
             ).catch(error => alert(error))
-        } else {
-            e.preventDefault();
 
             // https://stackoverflow.com/questions/38256256/reactjs-page-refreshing-upon-onclick-handle-of-button
 
-            alert("Annotation not completed, please finish.")
-        }
+            //alert("Annotation not completed, please finish.")
+
     }
 
     const handleAnnotator = e => {
@@ -168,9 +164,8 @@ function Annotator(props) {
 
             <tr　key={`table${index}`} style={{fontSize: "20px"}}>
                 <td style={colorCpt(review.cpt)}> {review.cpt}</td>
-
-
                 <td>{review.date}</td>
+                <td>{review.id}</td>
                 <td>
                     {(review.offset_sent[0] !== 0) ? `...` : ``} {review.review.substring(review.offset_sent[0] - 150, review.offset_sent[0])}
                     <span style={{
@@ -186,28 +181,12 @@ function Annotator(props) {
                     ):(" ")}
                     </span>
                 </td>
+
                 <td>
-                    <div className="form-check float-left ">
-                        <label className="form-check-label text-left">
+                    <div className="form-check float">
+                        <label className="form-check-label text">
                             <input type="checkbox" className="form-check-input"
-                                   name={`align${index}`} value={align[index]}
-                                   checked ={align[index]}
-                                   onChange={(event) => {
-                                       let key=event.target.name;
-                                       align[key] = event.target.checked;
-                                       setAlign(align)
-                                       console.log(align[`align${index}`])
-                                   }}
-                            />
-                            <span className="checkbox-label"> yes (aspect & sentiment) </span>
-                        </label>
-                    </div>
-                </td>
-                <td>
-                    <div className="form-check float-left">
-                        <label className="form-check-label text-left">
-                            <input type="checkbox" className="form-check-input"
-                                   name={`aspectNo${index}`} value={align_aspect[index]}
+                                   name={`aspectYes${index}`} value={align_aspect[index]}
                                    checked ={align_aspect[index]}
                                    onChange={(event) => {
                                        let key=event.target.name;
@@ -215,21 +194,23 @@ function Annotator(props) {
                                        setAlignAspect(align_aspect);
                                    }}
                             />
-                            <span className="checkbox-label"> no (aspect) </span>
-                            <br/>
+                            <span className="checkbox-label"> yes (aspect) </span>
+                        </label>
 
-                            <input type="checkbox" className="form-check-input"
+                    </div></td>
+                            <td>
+                                <div className="form-check float">
+                                    <label className="form-check-label text">
+                                    <input type="checkbox" className="form-check-input"
                                    checked={align_sentiment[index]}
-                                   name={`sentimentNo${index}`} value={align_sentiment[index]}
+                                   name={`sentimentYes${index}`} value={align_sentiment[index]}
                                    onChange={(event) => {
                                        let key=event.target.name;
                                        align_sentiment[key] = event.target.checked;
                                        setAlignSentiment(align_sentiment);
                                    }}
                             />
-                            <span className="checkbox-label"> no (sentiment) </span>
-                            <br/>
-
+                            <span className="checkbox-label"> yes (sentiment) </span>
 
                         </label>
                     </div>
@@ -247,11 +228,9 @@ function Annotator(props) {
     const crosszip = (cpts) => {
         let cpts1 = cpts.slice(1);
         let cpts2 = cpts.slice(0, cpts.length - 1);
-        let c = cpts2.map(function (e, i) {
+        return cpts2.map(function (e, i) {
             return [e, cpts1[i]];
         })
-        return c
-
     }
 
 
@@ -277,6 +256,11 @@ function Annotator(props) {
                     <li className="nav-item ">
                         <a className="nav-link" href="/wiki">Wiki</a>
                     </li>
+
+                    <li className="nav-item">
+                        <a className="nav-link" href="/datasetFront"> Dataset</a>
+                    </li>
+
 
                 </ul>
             </nav>
@@ -308,12 +292,20 @@ function Annotator(props) {
                        style={{borderCollapse: "separate", borderSpacing: "5px", "width": "100%"}}>
                     <thead>
                     <tr style={{ backgroundColor: "#dadee3"}}>
-                        <th style={{'fontSize': "18px"}}>Time Period</th>
-                        <th style={{"width": "8%", 'fontSize': '18px'}}>Date</th>
-                        <th>Review</th>
-                        <th style={{"width": "20%", "fontSize": "18px"}} colSpan={2}>
-                            Does the highlighted sentence align with the majority of sentences in this time period?
+                        <th style={{'fontSize': "20px"}}>Time Period</th>
+                        <th style={{"width": "8%", 'fontSize': '20px'}}>Date</th>
+                        <th>id</th>
+                        <th>Review
+                        <br/>
+                            <p style={{'fontSize': '17px'}}> #hashtags are the keywords for the category </p>
                         </th>
+                        <th style={{"width": "8%", "fontSize": "18px"}}>
+                            Does the aspect of the highlighted sentence align with the category ?
+                        </th>
+                        <th style={{"width": "8%", "fontSize": "18px"}}>
+                            Does the sentiment of the highlighted sentence align with the majority sentiment in this time period?
+                        </th>
+
 
                     </tr>
                     </thead>

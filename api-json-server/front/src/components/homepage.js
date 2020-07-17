@@ -24,6 +24,11 @@ function Home(){
                      <a className="nav-link" href="/wiki">Wiki</a>
                  </li>
 
+                 <li className="nav-item">
+                     <a className="nav-link" href="/datasetFront"> Dataset</a>
+                 </li>
+
+
              </ul>
      </nav>
 
@@ -57,7 +62,7 @@ function Home(){
                 For each date, there is a review and in which the relevant <b>sentence</b> is highlighted,
                 the topic keywords for the highlighted sentence are hashtagged, which is
             a reminder for the category on this page. For example, the first sentence is hashtagged with <b>rooms </b>
-             and <b>updating</b>, which are the keywords for categories <b>Room</b> and <b>Renovation</b>.
+             and <b>refurbish</b>, which are the keywords for categories <b>Room</b> and <b>Renovation</b>.
             However, when we consider the aspect and the sentiment for each sentence,
                 we focus on the aspect such as <b>Room</b>,
             that is relevant with the entities (i.e., rooms, pools, restaurants, etc.) in hotels.
@@ -66,23 +71,20 @@ function Home(){
 
             <p><b>(1)</b> read the sentences under their contexts (the reviews around the highlighted sentences)
                 in each time period, and get a grasp of the
-                majority sentiment (positive or negative), and the majority aspect,
+                majority sentiment (positive or negative),
                 then decide for each sentence whether it aligns with other sentences in this
-                time period, regarding sentiment and aspect. </p>
+                time period, regarding sentiment. As for the asepct, decide whether it alighs with the category.</p>
             <div>
                 <b>* For each review, </b>
                 <ul>
-                    <li> check the <i>yes(aspect & sentiment) </i> checkbox <i>if and only if</i>  you find both the sentiment and aspect
-                        of the highlighted sentence align with the sentiment and aspect of the majority of the sentences in the same period (i)
-                    </li>
                     <li>
-                        check the <i>no (aspect) </i> checkbox <i> if and only if </i> you find the aspect of the highlighted
-                        sentence doesn't align with the aspect of the majority of sentences in the same time period (ii)
+                        check the <i>yes (aspect) </i> checkbox <i> if and only if </i> you find the aspect of the highlighted
+                        sentence aligns with the category
 
                     </li>
                     <li>
-                        check the <i>no (sentiment) </i> checkbox <i> if and only if </i> you find the sentiment of the highlighted
-                        sentence doesn't align (or not clear) with the sentiment of the majority of sentences in the same time period (iii)
+                        check the <i>yes (sentiment) </i> checkbox <i> if and only if </i> you find the sentiment of the highlighted
+                        sentence aligns with the sentiment of the majority sentiment in the same time period
 
                     </li>
 
@@ -90,45 +92,21 @@ function Home(){
             </div>
 
 
-           <p><b> The <i>yes</i> checkbox and <i>no</i> checkboxes should be exlusive to each other.
-            You could check one or two <i>no</i> checkboxes, or only check the <i>yes</i> checkbox. </b> </p>
-
-        <p><b>The <i>no (sentiment) </i> checkbox and <i>not clear (sentiment)</i> checkbox are exclusive to each other</b></p>
-        <div>
-            The possible choices for question "Does this highlighted sentence align with the majority of sentences in this time period":
-            <ul>
-                <li> (i)</li>
-                <li>(ii) </li>
-                <li>(iii)</li>
-                <li>(ii) and (iii)</li>
-
-            </ul>
-
-        </div>
 
                 <p>In the following example, the sentences in the time period <b>0</b> are all
                     about <b>Room</b> (in aspect) and its renovations and are mostly negative (in sentiment).
                      Most reviews in this time period align with the rest,
-                    therefore most sentence is annotated with <i>yes (aspect & sentiment)</i>. Except
-                    the fifth sentence, of which sentiment is positive and the aspect aligns with the rest, so
-                    <i>no (sentiment)</i> is checked.
-                    For example, the first sentence's sentiment in time period <b>1</b> is hard to determine under the context,
-                    so <i>not clear (sentiment)</i> is checked.
-                   And the second sentence in time period <b>1</b>, i.e.,
-            "Please update the hot tubs". On the one hand, under the context "the hot tubs" are in the pools, so the
-            aspect of this sentence is <b>pool</b>  rather than <b>room</b>; on the other hand, the sentence is asking to do the
-            renovation, which means it has a negative sentiment about the hot tubs. Nonetheless, other sentences
-            in this time period have positive sentiments about the rooms in terms of renovations. So this sentence
-            is annotated with <b>no</b> both in aspect and sentiment.
-                    The fourth-to-last sentence in time period <b>2</b> is not about <b>room</b>,
-                    and but the sentiment is still positive, which aligns with the rest. So the <i>no (aspect)</i>  is checked.
+                    therefore most sentence is annotated with <i>yes (aspect)</i> and <i> yes (sentiment)</i>. Except
+                    the first sentence, of which sentiment is positive and the aspect aligns with the rest,
+                    so <i>yes (aspect)</i> is checked, but <i>yes (sentiment)</i> is unchecked, so is the third sentence
+                    in the time period <b>0</b> and the last sentence in the time period <b>1</b>.
+
                 </p>
 
             <p><b>(2)</b> After annotating each sentence in each time period, decide whether
             there is a clear change from one time period to the successive one, i.e., more positive,
-            more negative, or no difference. As we can see, from <b>0</b> to <b>1</b> and from <b>1</b> to <b>2</b>,
-            the reviews are mostly becoming more positive regarding <b>Room</b>, so choose <i>More Positive</i> for
-            both questions.</p>
+            more negative, or no difference. As we can see, from <b>0</b> to <b>1</b> ,
+            the reviews are mostly becoming more positive regarding <b>Room</b>, so choose <i>More Positive</i>.</p>
 
             <p><b>(3)</b> After finishing annotating all the sentences and answering all the questions on one page,
             please input your user name (only in a combination of numbers and alphabets), and click <b>Submit</b>.
