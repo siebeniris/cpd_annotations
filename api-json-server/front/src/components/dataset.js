@@ -51,6 +51,7 @@ export default function Dataset(props){
             <td>{elem.cpt}</td>
             <td>{elem.text}</td>
             <td>{elem.sentiment.toFixed(6)}</td>
+            <td>{elem['gold-sentiment']? `True`:`False`}</td>
         </tr>)
     }
 
@@ -99,6 +100,7 @@ export default function Dataset(props){
                     <th>Time Period</th>
                     <th>TEXT</th>
                     <th>SCORE</th>
+                    <th>LABEL</th>
                 </tr>
                 </thead>
 
@@ -115,7 +117,7 @@ export default function Dataset(props){
                             <tbody key={`body`+index}>
                             {renderTableRow(elem, index)}
                             <tr key={`cpt${current_cpt}`}>
-                                <td colSpan="5"
+                                <td colSpan="6"
                                     style={{"backgroundColor":'#1bb568',
                                         'textAlign':'center',
                                         'color':'white',
@@ -128,7 +130,7 @@ export default function Dataset(props){
                             <tbody key={`body`+index}>
                             {renderTableRow(elem, index)}
                             <tr key={`cpt${current_cpt}`}>
-                                <td colSpan="5"
+                                <td colSpan="6"
                                     style={{"backgroundColor":'#D11638',
                                         'textAlign':'center',
                                         'color':'white',
@@ -140,7 +142,7 @@ export default function Dataset(props){
                             <tbody key={`body`+index}>
                             {renderTableRow(elem, index)}
                             <tr key={`cpt${current_cpt}`}>
-                                <td colSpan="5"
+                                <td colSpan="6"
                                     style={{"backgroundColor":'#7E8E90',
                                         'textAlign':'center',
                                         'color':'white',
