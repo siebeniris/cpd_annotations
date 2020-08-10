@@ -1,7 +1,3 @@
+- run the annotation tool
 
-- add prefix:
-
-    `find * -maxdepth 0 -exec mv {} venue_{} \;`
-    
-    
- 
+`npm run dev`
