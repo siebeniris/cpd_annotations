@@ -23,7 +23,7 @@
     "fs": "0.0.1-security",
     "http-proxy-middleware": "^1.0.4",
     "lowdb": "^1.0.0",
-    "marked": "^1.1.0",
+    "marked": "^4.0.10",
     "path": "^0.12.7",
     "qs": "^6.9.4",
     "react": "^16.13.1",
